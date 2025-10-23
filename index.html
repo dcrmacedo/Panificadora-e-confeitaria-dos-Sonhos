@@ -783,7 +783,25 @@ async function saveConfigToFirebase() {
         }
         
         console.log('💾 Salvando configuração no Firebase...');
-        await firestoreDb.collection('config').doc('shopConfig').set(config, { merge: true });
+        
+        // Limpar dados undefined antes de salvar
+        const cleanConfig = JSON.parse(JSON.stringify(config));
+        
+        // Função recursiva para remover campos undefined
+        function removeUndefined(obj) {
+            for (let key in obj) {
+                if (obj[key] === undefined) {
+                    delete obj[key];
+                } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+                    removeUndefined(obj[key]);
+                }
+            }
+            return obj;
+        }
+        
+        const finalConfig = removeUndefined(cleanConfig);
+        
+        await firestoreDb.collection('config').doc('shopConfig').set(finalConfig, { merge: true });
         console.log('✅ Configuração salva no Firebase');
         return true;
     } catch (error) {
@@ -1823,33 +1841,40 @@ itemEl.innerHTML = `
         }
 
         async function saveNewProduct(event) {
-            event.preventDefault();
-            
-            const category = config.menu.find(cat => cat.category === ADMIN_CONFIG.currentCategory);
-            if (!category) return;
-            
-            const newProduct = {
-                id: generateProductId(),
-                name: document.getElementById('product-name').value,
-                newPrice: parseFloat(document.getElementById('product-newPrice').value),
-                oldPrice: document.getElementById('product-oldPrice').value ? parseFloat(document.getElementById('product-oldPrice').value) : null,
-                imageUrl: document.getElementById('product-imageUrl').value || "https://via.placeholder.com/300x200?text=Produto",
-                description: document.getElementById('product-description').value,
-                delivery: document.getElementById('product-delivery').value || "Entrega grátis",
-                stock: document.getElementById('product-stock').value ? parseInt(document.getElementById('product-stock').value) : null,
-                accompaniments: { limit: 0, options: [] },
-                drinks: { limit: 0, options: [] }
-            };
-            
-            category.products.push(newProduct);
-            
-            // Salva no Firebase
-            const success = await saveConfigToFirebase();
-            if (success) {
-                alert('✅ Produto adicionado com sucesso!');
-                loadAdminDashboard();
-            }
+    event.preventDefault();
+    
+    const category = config.menu.find(cat => cat.category === ADMIN_CONFIG.currentCategory);
+    if (!category) return;
+    
+    const newProduct = {
+        id: generateProductId(),
+        name: document.getElementById('product-name').value,
+        newPrice: parseFloat(document.getElementById('product-newPrice').value),
+        oldPrice: document.getElementById('product-oldPrice').value ? parseFloat(document.getElementById('product-oldPrice').value) : null,
+        imageUrl: document.getElementById('product-imageUrl').value || "https://via.placeholder.com/300x200?text=Produto",
+        description: document.getElementById('product-description').value || "",
+        delivery: document.getElementById('product-delivery').value || "Entrega grátis",
+        stock: document.getElementById('product-stock').value ? parseInt(document.getElementById('product-stock').value) : null,
+        accompaniments: { limit: 0, options: [] },
+        drinks: { limit: 0, options: [] }
+    };
+    
+    // Garantir que não há campos undefined
+    Object.keys(newProduct).forEach(key => {
+        if (newProduct[key] === undefined) {
+            newProduct[key] = null;
         }
+    });
+    
+    category.products.push(newProduct);
+    
+    // Salva no Firebase
+    const success = await saveConfigToFirebase();
+    if (success) {
+        alert('✅ Produto adicionado com sucesso!');
+        loadAdminDashboard();
+    }
+}
 
         function generateProductId() {
             return Math.max(...config.menu.flatMap(cat => cat.products.map(p => p.id)), 0) + 1;
