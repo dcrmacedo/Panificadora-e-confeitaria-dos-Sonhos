@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -308,13 +309,9 @@
     </style>
 
     <!-- FIREBASE CONFIGURAÇÃO -->
-    <script>
-        // ===================================================================================
-        // =========================== CONFIGURAÇÃO FIREBASE ================================
-        // ===================================================================================
-
-        // SUA CONFIGURAÇÃO DO FIREBASE
-        const firebaseConfig = {
+<script>
+// =========================== CONFIGURAÇÃO FIREBASE ================================
+const firebaseConfig = {
     apiKey: "AIzaSyCD8mdV9w-bTaaqHtrZIErrh84fAPRe20c",
     authDomain: "panificadora-dos-sonhos.firebaseapp.com",
     projectId: "panificadora-dos-sonhos",
@@ -323,19 +320,43 @@
     appId: "1:919334350725:web:59a8db296323681d505eec"
 };
 
-       // Inicializar Firebase
-try {
-    firebase.initializeApp(firebaseConfig);
-    firestoreDb = firebase.firestore();
-    console.log('✅ Firebase inicializado com sucesso');
-    console.log('🔍 Firestore DB:', firestoreDb); // ← Adicione esta linha para debug
-} catch (error) {
-    console.error('❌ Erro ao inicializar Firebase:', error);
-    firestoreDb = null; // ← Garante que não fique undefined
+// Função para inicializar o Firebase
+function initializeFirebase() {
+    try {
+        // Verifica se o Firebase está disponível
+        if (typeof firebase === 'undefined') {
+            console.error('❌ Firebase SDK não carregado');
+            return false;
+        }
+        
+        // Verifica se já foi inicializado
+        if (firestoreDb) {
+            console.log('✅ Firebase já inicializado');
+            return true;
+        }
+        
+        const app = firebase.initializeApp(firebaseConfig);
+        firestoreDb = firebase.firestore(app);
+        console.log('✅ Firebase e Firestore inicializados com sucesso');
+        return true;
+    } catch (error) {
+        // Se já foi inicializado, ignora o erro
+        if (error.code === 'app/duplicate-app') {
+            console.log('✅ Firebase já foi inicializado anteriormente');
+            firestoreDb = firebase.firestore();
+            return true;
+        }
+        console.error('❌ Erro ao inicializar Firebase:', error);
+        return false;
+    }
 }
 
-        let db = firebase.firestore();
-    </script>
+// Inicializar quando a página estiver completamente carregada
+document.addEventListener('DOMContentLoaded', function() {
+    initializeFirebase();
+});
+</script>
+
 </head>
 <body>
 
@@ -721,11 +742,17 @@ let indexedDb = null;      // Para IndexedDB;
 
 async function loadConfigFromFirebase() {
     try {
+        // Aguardar um pouco para garantir que o Firebase foi inicializado
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
         // Verifica se firestoreDb está inicializado
         if (!firestoreDb) {
-            console.warn('⚠️ Firestore não inicializado, usando configuração padrão');
-            config = { ...defaultConfig };
-            return;
+            console.warn('⚠️ Firestore não inicializado, tentando inicializar...');
+            if (!initializeFirebase()) {
+                console.warn('⚠️ Falha ao inicializar Firebase, usando configuração padrão');
+                config = { ...defaultConfig };
+                return;
+            }
         }
         
         console.log('🔄 Carregando configuração do Firebase...');
