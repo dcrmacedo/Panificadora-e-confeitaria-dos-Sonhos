@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -281,7 +280,52 @@
 .payment-icon:hover {
     transform: scale(1.05);
 }
+/* Estilo para produtos indisponíveis */
+.product-card.unavailable {
+    opacity: 0.6;
+    position: relative;
+    cursor: not-allowed;
+}
 
+.product-card.unavailable::after {
+    content: "INDISPONÍVEL";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    z-index: 10;
+}
+
+.unavailable-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ef4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    z-index: 5;
+}
+
+.product-card.unavailable:hover {
+    transform: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Botão desabilitado na página do produto */
+.add-to-cart-btn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
         /* --- MODAL DO CARRINHO --- */
         .cart-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 998; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
         .cart-modal { position: fixed; top: 0; right: -100%; width: 100%; max-width: 450px; height: 100%; background-color: var(--white); z-index: 999; transition: right 0.3s ease; display: flex; flex-direction: column; }
@@ -372,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="shop-logo"><img id="shop-logo-main" src="" alt="Logo da Loja"></div>
             <div class="container">
                 <h1 class="shop-name" id="shop-name-main"></h1>
-                <div class="shop-details"><span>Horário de Funcionamento: Segunda a Sábado: 06h às 20h</span><span>•</span><span>Entrega Grátis </span><span>•</span><span>⭐ 4.9/5 (1360 avaliações)</span></div>
+                <div class="shop-details"><span>Horário de Funcionamento: Segunda a Sábado: 06h às 20h</span><span></span><span>Entrega Grátis </span><span></span><span></span></div>
             </div>
         </div>
 
@@ -394,7 +438,6 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="footer-section">
             <h3>Contato</h3>
             <p><i class="fas fa-phone"></i> (91) 98112-0535</p>
-            <p><i class="fas fa-envelope"></i> Contato@gmail.com</p>
         </div>
 
         <div class="footer-section">
@@ -406,9 +449,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="footer-section">
             <h3>Redes Sociais</h3>
             <div class="social-links">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/panif_confeitariadossonhos/"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/5591981120535?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre..."><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
         <div class="footer-section">
@@ -531,7 +573,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // =========================== CONFIGURAÇÃO INICIAL ==================================
         // ===================================================================================
         const defaultConfig = {
-    whatsappNumber: "559181727306",
+    whatsappNumber: "5591999138557",
     shop: {
         name: "Panificadora e Confeitaria dos Sonhos",
         logoUrl: "./imagens/logodonavegador.png",
@@ -716,17 +758,16 @@ document.addEventListener('DOMContentLoaded', function() {
 };
 
         // Variáveis globais
-        // Variáveis globais
-let config = { ...defaultConfig };
-let cart = [];
-let currentProductState = {};
-const DB_NAME = 'TstDB';
-const DB_VERSION = 1;
-const STORE_NAME = 'cart';
+        let config = { ...defaultConfig };
+        let cart = [];
+        let currentProductState = {};
+        const DB_NAME = 'TstDB';
+        const DB_VERSION = 1;
+        const STORE_NAME = 'cart';
 
-// Bancos de dados separados
-let firestoreDb = null;    // Para Firebase Firestore
-let indexedDb = null;      // Para IndexedDB;
+        // Bancos de dados separados
+        let firestoreDb = null;    // Para Firebase Firestore
+        let indexedDb = null;      // Para IndexedDB
 
         const mainPage = document.getElementById('main-page');
         const productPage = document.getElementById('product-page');
@@ -739,7 +780,6 @@ let indexedDb = null;      // Para IndexedDB;
         // ===================================================================================
 
         // Carregar configuração do Firebase
-
 async function loadConfigFromFirebase() {
     try {
         // Aguardar um pouco para garantir que o Firebase foi inicializado
@@ -826,7 +866,7 @@ async function saveConfigToFirebase() {
         };
         
         request.onsuccess = () => {
-            indexedDb = request.result; // ← Use indexedDb
+            indexedDb = request.result;
             console.log('✅ IndexedDB inicializado com sucesso');
             resolve(indexedDb);
         };
@@ -852,7 +892,7 @@ async function saveConfigToFirebase() {
     if (!indexedDb) return;
             
             return new Promise((resolve, reject) => {
-        const transaction = indexedDb.transaction([STORE_NAME], 'readwrite'); // ← Use indexedDb
+        const transaction = indexedDb.transaction([STORE_NAME], 'readwrite');
         const store = transaction.objectStore(STORE_NAME);
                 
                 const clearRequest = store.clear();
@@ -898,7 +938,7 @@ async function saveConfigToFirebase() {
     if (!indexedDb) return [];
             
             return new Promise((resolve, reject) => {
-        const transaction = indexedDb.transaction([STORE_NAME], 'readonly'); // ← Use indexedDb
+        const transaction = indexedDb.transaction([STORE_NAME], 'readonly');
         const store = transaction.objectStore(STORE_NAME);
                 const request = store.getAll();
                 
@@ -922,6 +962,39 @@ async function saveConfigToFirebase() {
             
             if (cartModal.classList.contains('open')) {
                 renderCartItems();
+            }
+        }
+
+        // ===================================================================================
+        // =========================== FUNÇÕES AUXILIARES ====================================
+        // ===================================================================================
+
+        // Função para verificar se um produto está disponível
+        function isProductAvailable(product) {
+            // Se não tem propriedade stock, considera como disponível
+            if (product.stock === undefined || product.stock === null) {
+                return true;
+            }
+            // Se stock é 0 ou negativo, está indisponível
+            return product.stock > 0;
+        }
+
+        async function updateStockAfterSale() {
+            try {
+                for (const item of cart) {
+                    const product = findProductById(item.productId);
+                    if (product && product.stock !== undefined && product.stock !== null) {
+                        // Diminuir o estoque pela quantidade vendida
+                        product.stock = Math.max(0, product.stock - item.quantity);
+                    }
+                }
+                
+                // Salvar as alterações no Firebase
+                await saveConfigToFirebase();
+                return true;
+            } catch (error) {
+                console.error('Erro ao atualizar estoque:', error);
+                return false;
             }
         }
 
@@ -960,37 +1033,73 @@ async function saveConfigToFirebase() {
         }
 
         async function renderMenuPage() {
-            document.getElementById('shop-logo-main').src = config.shop.logoUrl;
-            document.getElementById('shop-name-main').innerHTML = `${config.shop.name} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#3b82f6" stroke="white" stroke-width="1"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>`;
+    document.getElementById('shop-logo-main').src = config.shop.logoUrl;
+    document.getElementById('shop-name-main').innerHTML = `${config.shop.name} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#3b82f6" stroke="white" stroke-width="1"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>`;
+    
+    const categoryMenu = document.getElementById('category-menu');
+    const menuContainer = document.getElementById('menu-container');
+    categoryMenu.innerHTML = '';
+    menuContainer.innerHTML = '';
+
+    config.menu.forEach(cat => {
+        const categoryId = `cat-${cat.category.replace(/\s+/g, '-')}`;
+        categoryMenu.innerHTML += `<a href="#${categoryId}">${cat.category}</a>`;
+        
+        const section = document.createElement('section');
+        section.id = categoryId;
+        section.className = 'menu-category-section';
+        
+        const grid = document.createElement('div');
+        grid.className = 'product-grid';
+
+        cat.products.forEach(product => {
+            const isAvailable = isProductAvailable(product);
+            const card = document.createElement('div');
+            card.className = `product-card ${!isAvailable ? 'unavailable' : ''}`;
             
-            const categoryMenu = document.getElementById('category-menu');
-            const menuContainer = document.getElementById('menu-container');
-            categoryMenu.innerHTML = '';
-            menuContainer.innerHTML = '';
-
-            config.menu.forEach(cat => {
-                const categoryId = `cat-${cat.category.replace(/\s+/g, '-')}`;
-                categoryMenu.innerHTML += `<a href="#${categoryId}">${cat.category}</a>`;
+            if (!isAvailable) {
+                card.innerHTML = `
+                    <div class="unavailable-badge">INDISPONÍVEL</div>
+                    <img src="${product.imageUrl}" alt="${product.name}" style="filter: grayscale(70%);">
+                    <div class="product-card-info">
+                        <div class="product-card-title" style="color: #9ca3af;">${product.name}</div>
+                        ${product.delivery ? `<div class="product-card-delivery" style="color: #9ca3af;">${product.delivery}</div>` : ''}
+                        <div class="product-card-price">
+                            ${product.oldPrice ? `<span class="old-price" style="color: #9ca3af;">de ${formatPrice(product.oldPrice)}</span>` : ''} 
+                            <span class="new-price" style="color: #9ca3af;">${formatPrice(product.newPrice)}</span>
+                        </div>
+                        <div style="color: #ef4444; font-size: 0.8rem; margin-top: 0.5rem; font-weight: bold;">
+                            Produto esgotado
+                        </div>
+                    </div>
+                `;
+            } else {
+                card.onclick = () => showProductPage(product.id);
+                card.innerHTML = `
+                    <img src="${product.imageUrl}" alt="${product.name}">
+                    <div class="product-card-info">
+                        <div class="product-card-title">${product.name}</div>
+                        ${product.delivery ? `<div class="product-card-delivery">${product.delivery}</div>` : ''}
+                        <div class="product-card-price">
+                            ${product.oldPrice ? `<span class="old-price">de ${formatPrice(product.oldPrice)}</span>` : ''} 
+                            <span class="new-price">${formatPrice(product.newPrice)}</span>
+                        </div>
+                        ${product.stock && product.stock <= 10 ? `
+                            <div style="color: #f97316; font-size: 0.8rem; margin-top: 0.5rem;">
+                                ⚠️ Apenas ${product.stock} disponíveis
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+            grid.appendChild(card);
+        });
+        
+        section.innerHTML = `<div class="container"><h2 class="product-section-title">${cat.category}</h2></div>`;
+        section.querySelector('.container').appendChild(grid);
+        menuContainer.appendChild(section);
+    });
                 
-                const section = document.createElement('section');
-                section.id = categoryId;
-                section.className = 'menu-category-section';
-                
-                const grid = document.createElement('div');
-                grid.className = 'product-grid';
-
-                cat.products.forEach(product => {
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-                    card.onclick = () => showProductPage(product.id);
-                    card.innerHTML = `<img src="${product.imageUrl}" alt="${product.name}"><div class="product-card-info"><div class="product-card-title">${product.name}</div>${product.delivery ? `<div class="product-card-delivery">${product.delivery}</div>` : ''}<div class="product-card-price">${product.oldPrice ? `<span class="old-price">de ${formatPrice(product.oldPrice)}</span>` : ''} <span class="new-price">${formatPrice(product.newPrice)}</span></div></div>`;
-                    grid.appendChild(card);
-                });
-                
-                section.innerHTML = `<div class="container"><h2 class="product-section-title">${cat.category}</h2></div>`;
-                section.querySelector('.container').appendChild(grid);
-                menuContainer.appendChild(section);
-            });
             
             try {
                 const savedCart = await loadCartFromDB();
@@ -1011,123 +1120,140 @@ async function saveConfigToFirebase() {
             return null;
         }
 
-        function showProductPage(productId) {
+      function showProductPage(productId) {
     const product = findProductById(productId);
     if (!product) return;
     
+    const isAvailable = isProductAvailable(product);
     const isEditing = currentProductState.editingItemId !== undefined;
     
+    // VERIFICAÇÃO DE DISPONIBILIDADE
+    if (!isAvailable && !isEditing) {
+        alert('Este produto está temporariamente indisponível.');
+        showMainPage();
+        return;
+    }
+    
     // Na função showProductPage, dentro do if (!isEditing):
-if (!isEditing) {
-    currentProductState = { 
-        product, 
-        accompaniments: {}, 
-        drinks: {},
-        totalSelections: 1
-    };
+    if (!isEditing) {
+        currentProductState = { 
+            product, 
+            accompaniments: {}, 
+            drinks: {},
+            totalSelections: 1
+        };
 
-    // Inicializar com 1 unidade do produto (acompanhamento de quantidade)
-    if (product.accompaniments && product.accompaniments.options.length > 0) {
-        const quantityOption = product.accompaniments.options.find(opt => 
-            opt.name.toLowerCase().includes('quantidade')
-        );
-        if (quantityOption) {
-            currentProductState.accompaniments[quantityOption.name] = { 
-                quantity: 1, 
-                price: quantityOption.price 
-            };
+        // Inicializar com 1 unidade do produto (acompanhamento de quantidade)
+        if (product.accompaniments && product.accompaniments.options.length > 0) {
+            const quantityOption = product.accompaniments.options.find(opt => 
+                opt.name.toLowerCase().includes('quantidade')
+            );
+            if (quantityOption) {
+                currentProductState.accompaniments[quantityOption.name] = { 
+                    quantity: 1, 
+                    price: quantityOption.price 
+                };
+            }
         }
     }
-}
+    
+    document.getElementById('product-image-lg').src = product.imageUrl;
+    document.getElementById('product-title-lg').textContent = product.name;
+    document.getElementById('product-price-lg').innerHTML = `${product.oldPrice ? `<span class="old-price">de ${formatPrice(product.oldPrice)} por</span>` : ''}<span class="new-price">${formatPrice(product.newPrice)}</span>`;
+    document.getElementById('product-stock').textContent = product.stock ? `apenas ${product.stock} disponíveis` : '';
+    document.getElementById('product-description').textContent = product.description;
+    
+    // Renderizar acompanhamentos
+    const accompanimentsSection = document.getElementById('accompaniments-section');
+    const accompanimentsList = document.getElementById('accompaniments-list');
+    accompanimentsList.innerHTML = '';
+
+    if (product.accompaniments && product.accompaniments.limit > 0) {
+        accompanimentsSection.classList.remove('hidden');
+        document.getElementById('accompaniments-subtitle').textContent = `Escolha até ${product.accompaniments.limit} opções`;
+        
+        product.accompaniments.options.forEach(option => {
+            const item = document.createElement('div');
+            item.className = 'accompaniment-item';
             
-            document.getElementById('product-image-lg').src = product.imageUrl;
-            document.getElementById('product-title-lg').textContent = product.name;
-            document.getElementById('product-price-lg').innerHTML = `${product.oldPrice ? `<span class="old-price">de ${formatPrice(product.oldPrice)} por</span>` : ''}<span class="new-price">${formatPrice(product.newPrice)}</span>`;
-            document.getElementById('product-stock').textContent = product.stock ? `apenas ${product.stock} disponíveis` : '';
-            document.getElementById('product-description').textContent = product.description;
+            // Verificar se este acompanhamento já foi selecionado anteriormente
+            const existingSelection = currentProductState.accompaniments[option.name];
+            const currentQty = existingSelection ? existingSelection.quantity : 0;
             
-            // Renderizar acompanhamentos
-            const accompanimentsSection = document.getElementById('accompaniments-section');
-            const accompanimentsList = document.getElementById('accompaniments-list');
-            accompanimentsList.innerHTML = '';
+            item.innerHTML = `
+                <div>
+                    <div>${option.name}</div>
+                    <div class="accompaniment-price">${option.price > 0 ? formatPrice(option.price) : 'Grátis'}</div>
+                </div>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus-btn" onclick="updateAccompanimentQuantity('${option.name}', -1, ${option.price})" ${currentQty === 0 ? 'disabled' : ''}>-</button>
+                    <span class="quantity-value" id="accompaniment-quantity-${option.name.replace(/\s/g, '')}">${currentQty}</span>
+                    <button class="quantity-btn plus-btn" onclick="updateAccompanimentQuantity('${option.name}', 1, ${option.price})" ${currentProductState.totalSelections >= product.accompaniments.limit ? 'disabled' : ''}>+</button>
+                </div>`;
+            accompanimentsList.appendChild(item);
+        });
+    } else { 
+        accompanimentsSection.classList.add('hidden'); 
+    }
 
-            if (product.accompaniments && product.accompaniments.limit > 0) {
-                accompanimentsSection.classList.remove('hidden');
-                document.getElementById('accompaniments-subtitle').textContent = `Escolha até ${product.accompaniments.limit} opções`;
-                
-                product.accompaniments.options.forEach(option => {
-                    const item = document.createElement('div');
-                    item.className = 'accompaniment-item';
-                    
-                    // Verificar se este acompanhamento já foi selecionado anteriormente
-                    const existingSelection = currentProductState.accompaniments[option.name];
-                    const currentQty = existingSelection ? existingSelection.quantity : 0;
-                    
-                    item.innerHTML = `
-                        <div>
-                            <div>${option.name}</div>
-                            <div class="accompaniment-price">${option.price > 0 ? formatPrice(option.price) : 'Grátis'}</div>
-                        </div>
-                        <div class="quantity-control">
-                            <button class="quantity-btn minus-btn" onclick="updateAccompanimentQuantity('${option.name}', -1, ${option.price})" ${currentQty === 0 ? 'disabled' : ''}>-</button>
-                            <span class="quantity-value" id="accompaniment-quantity-${option.name.replace(/\s/g, '')}">${currentQty}</span>
-                            <button class="quantity-btn plus-btn" onclick="updateAccompanimentQuantity('${option.name}', 1, ${option.price})" ${currentProductState.totalSelections >= product.accompaniments.limit ? 'disabled' : ''}>+</button>
-                        </div>`;
-                    accompanimentsList.appendChild(item);
-                });
-            } else { 
-                accompanimentsSection.classList.add('hidden'); 
-            }
+    // Renderizar bebidas
+    const drinksSection = document.getElementById('drinks-section');
+    const drinksList = document.getElementById('drinks-list');
+    drinksList.innerHTML = '';
 
-            // Renderizar bebidas
-            const drinksSection = document.getElementById('drinks-section');
-            const drinksList = document.getElementById('drinks-list');
-            drinksList.innerHTML = '';
-
-            if (product.drinks && product.drinks.limit > 0) {
-                drinksSection.classList.remove('hidden');
-                document.getElementById('drinks-subtitle').textContent = `Escolha até ${product.drinks.limit} opções`;
-                
-                product.drinks.options.forEach(drink => {
-                    const item = document.createElement('div');
-                    item.className = 'accompaniment-item';
-                    
-                    // Verificar se esta bebida já foi selecionada anteriormente
-                    const existingSelection = currentProductState.drinks[drink.name];
-                    const currentQty = existingSelection ? existingSelection.quantity : 0;
-                    
-                    item.innerHTML = `
-                        <div>
-                            <div>${drink.name}</div>
-                            <div class="accompaniment-price">${formatPrice(drink.price)}</div>
-                        </div>
-                        <div class="quantity-control">
-                            <button class="quantity-btn minus-btn" onclick="updateDrinkQuantity('${drink.name}', -1, ${drink.price})" ${currentQty === 0 ? 'disabled' : ''}>-</button>
-                            <span class="quantity-value" id="drink-quantity-${drink.name.replace(/\s/g, '')}">${currentQty}</span>
-                            <button class="quantity-btn plus-btn" onclick="updateDrinkQuantity('${drink.name}', 1, ${drink.price})" ${currentProductState.totalSelections >= product.drinks.limit ? 'disabled' : ''}>+</button>
-                        </div>`;
-                    drinksList.appendChild(item);
-                });
-            } else { 
-                drinksSection.classList.add('hidden'); 
-            }
-
-            // Atualizar botão conforme o contexto (adicionar ou editar)
-            const addToCartBtn = document.getElementById('add-to-cart-btn');
-            if (isEditing) {
-                addToCartBtn.textContent = 'Atualizar Item';
-                addToCartBtn.onclick = updateCartItem;
-            } else {
-                addToCartBtn.textContent = 'Adicionar ao carrinho';
-                addToCartBtn.onclick = addToCart;
-            }
+    if (product.drinks && product.drinks.limit > 0) {
+        drinksSection.classList.remove('hidden');
+        document.getElementById('drinks-subtitle').textContent = `Escolha até ${product.drinks.limit} opções`;
+        
+        product.drinks.options.forEach(drink => {
+            const item = document.createElement('div');
+            item.className = 'accompaniment-item';
             
-            updateProductFooter();
-            updateButtonsState();
-            mainPage.classList.add('hidden');
-            productPage.classList.remove('hidden');
-            window.scrollTo(0, 0);
+            // Verificar se esta bebida já foi selecionada anteriormente
+            const existingSelection = currentProductState.drinks[drink.name];
+            const currentQty = existingSelection ? existingSelection.quantity : 0;
+            
+            item.innerHTML = `
+                <div>
+                    <div>${drink.name}</div>
+                    <div class="accompaniment-price">${formatPrice(drink.price)}</div>
+                </div>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus-btn" onclick="updateDrinkQuantity('${drink.name}', -1, ${drink.price})" ${currentQty === 0 ? 'disabled' : ''}>-</button>
+                    <span class="quantity-value" id="drink-quantity-${drink.name.replace(/\s/g, '')}">${currentQty}</span>
+                    <button class="quantity-btn plus-btn" onclick="updateDrinkQuantity('${drink.name}', 1, ${drink.price})" ${currentProductState.totalSelections >= product.drinks.limit ? 'disabled' : ''}>+</button>
+                </div>`;
+            drinksList.appendChild(item);
+        });
+    } else { 
+        drinksSection.classList.add('hidden'); 
+    }
+
+    // Atualizar botão de adicionar ao carrinho conforme disponibilidade
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    if (!isAvailable) {
+        addToCartBtn.textContent = 'PRODUTO INDISPONÍVEL';
+        addToCartBtn.disabled = true;
+        addToCartBtn.style.backgroundColor = '#9ca3af';
+        addToCartBtn.onclick = null;
+    } else {
+        if (isEditing) {
+            addToCartBtn.textContent = 'Atualizar Item';
+            addToCartBtn.onclick = updateCartItem;
+        } else {
+            addToCartBtn.textContent = 'Adicionar ao carrinho';
+            addToCartBtn.onclick = addToCart;
         }
+        addToCartBtn.disabled = false;
+        addToCartBtn.style.backgroundColor = '';
+    }
+
+    updateProductFooter();
+    updateButtonsState();
+    mainPage.classList.add('hidden');
+    productPage.classList.remove('hidden');
+    window.scrollTo(0, 0);
+}
 
         function showMainPage() { 
             productPage.classList.add('hidden'); 
@@ -1161,7 +1287,7 @@ if (!isEditing) {
     } else {
         accompaniments[option] = { 
             quantity: newQty, 
-            price: isQuantityOption ? 0 : price // Preço zero apenas para quantidade
+            price: isQuantityOption ? 0 : price
         };
     }
     
@@ -1209,12 +1335,11 @@ function updateDrinkQuantity(drink, change, price) {
     }
     
     // Atualizar contagem total (bebidas + acompanhamentos exceto quantidade)
-    // Dentro de showProductPage, substitua a inicialização do totalSelections:
-currentProductState.totalSelections = 
-    Object.entries(currentProductState.accompaniments)
-        .filter(([name, data]) => !name.toLowerCase().includes('quantidade'))
-        .reduce((total, [name, data]) => total + data.quantity, 0) + 
-    Object.values(currentProductState.drinks).reduce((a, b) => a + b.quantity, 0);
+    currentProductState.totalSelections = 
+        Object.entries(currentProductState.accompaniments)
+            .filter(([name, data]) => !name.toLowerCase().includes('quantidade'))
+            .reduce((total, [name, data]) => total + data.quantity, 0) + 
+        Object.values(currentProductState.drinks).reduce((a, b) => a + b.quantity, 0);
     
     document.getElementById(`drink-quantity-${drink.replace(/\s/g, '')}`).textContent = newQty;
     const minusBtn = document.querySelector(`#drink-quantity-${drink.replace(/\s/g, '')}`).previousElementSibling;
@@ -1252,6 +1377,12 @@ currentProductState.totalSelections =
 } 
    async function addToCart() {
     const { product, accompaniments, drinks } = currentProductState;
+    
+    // Verificar se o produto ainda está disponível
+    if (!isProductAvailable(product)) {
+        alert('Desculpe, este produto está indisponível no momento.');
+        return;
+    }
     
     // Calcular quantidade do produto
     let productQuantity = 1;
@@ -1353,8 +1484,7 @@ currentProductState.totalSelections =
                         }).join(', ');
                     }
                     
-                   // Na função renderCartItems(), modifique a exibição do nome do produto:
-itemEl.innerHTML = `
+                   itemEl.innerHTML = `
     <div class="cart-item-header">
         <div class="cart-item-name">${item.name || 'Produto sem nome'} ${item.quantity > 1 ? `(${item.quantity}x)` : ''}</div>
         <div class="cart-item-price">${formatPrice(itemPrice)}</div>
@@ -1539,6 +1669,11 @@ itemEl.innerHTML = `
     
     const whatsappUrl = `https://wa.me/${config.whatsappNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
+
+    // Diminuir estoque dos produtos vendidos
+    if (await updateStockAfterSale()) {
+        console.log('Estoque atualizado com sucesso');
+    }
     
     await updateCart([]);
     closeCart();
@@ -1606,7 +1741,7 @@ itemEl.innerHTML = `
         // ===================================================================================
 
         const ADMIN_CONFIG = {
-            password: "david123", // MUDE ESTA SENHA!
+            password: "admin@2025", // MUDE ESTA SENHA!
             currentCategory: null,
             editingProduct: null
         };
@@ -1701,19 +1836,33 @@ itemEl.innerHTML = `
                     <p style="color: #6b7280; margin-bottom: 10px;"><strong>Selecione uma categoria:</strong></p>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         ${config.menu.map(category => `
-                            <button onclick="selectAdminCategory('${category.category}')" 
-                                style="padding: 10px 20px; 
-                                       background: ${ADMIN_CONFIG.currentCategory === category.category ? '#f97316' : '#f3f4f6'}; 
-                                       color: ${ADMIN_CONFIG.currentCategory === category.category ? 'white' : '#374151'}; 
-                                       border: 1px solid #d1d5db;
-                                       border-radius: 8px; 
-                                       cursor: pointer;
-                                       font-weight: bold;
-                                       transition: all 0.3s ease;">
-                                ${category.category}
-                            </button>
+                            <div style="position: relative; display: inline-block;">
+                                <button onclick="selectAdminCategory('${category.category}')" 
+                                    style="padding: 10px 20px; 
+                                           background: ${ADMIN_CONFIG.currentCategory === category.category ? '#f97316' : '#f3f4f6'}; 
+                                           color: ${ADMIN_CONFIG.currentCategory === category.category ? 'white' : '#374151'}; 
+                                           border: 1px solid #d1d5db;
+                                           border-radius: 8px; 
+                                           cursor: pointer;
+                                           font-weight: bold;
+                                           transition: all 0.3s ease;">
+                                    ${category.category}
+                                </button>
+                                <button onclick="deleteCategoryWithProducts('${category.category}')" 
+                                    style="position: absolute; top: -8px; right: -8px; 
+                                           width: 24px; height: 24px; 
+                                           background: #ef4444; color: white; 
+                                           border: none; border-radius: 50%; 
+                                           cursor: pointer; font-size: 12px;
+                                           display: flex; align-items: center; justify-content: center;">
+                                    ×
+                                </button>
+                            </div>
                         `).join('')}
                     </div>
+                    <p style="color: #6b7280; font-size: 0.8em; margin-top: 10px;">
+                        💡 <strong>Nota:</strong> Clique no botão × para excluir categorias
+                    </p>
                 </div>
             `;
         }
@@ -2186,6 +2335,151 @@ itemEl.innerHTML = `
             }
         }
 
+        // ===================================================================================
+        // =========================== FUNÇÕES PARA EXCLUIR CATEGORIAS ======================
+        // ===================================================================================
+
+        async function deleteCategory(categoryName) {
+            // Encontrar a categoria
+            const categoryIndex = config.menu.findIndex(cat => cat.category === categoryName);
+            
+            if (categoryIndex === -1) {
+                alert('❌ Categoria não encontrada!');
+                return;
+            }
+            
+            const category = config.menu[categoryIndex];
+            
+            // Verificar se a categoria está vazia
+            if (category.products.length > 0) {
+                alert('❌ Não é possível excluir categorias que contêm produtos!\n\nPor favor, remova ou mova todos os produtos antes de excluir a categoria.');
+                return;
+            }
+            
+            if (!confirm(`🗑️ Tem certeza que deseja excluir a categoria "${categoryName}"?`)) {
+                return;
+            }
+            
+            // Remover a categoria
+            config.menu.splice(categoryIndex, 1);
+            
+            // Atualizar a categoria selecionada se necessário
+            if (ADMIN_CONFIG.currentCategory === categoryName) {
+                ADMIN_CONFIG.currentCategory = config.menu.length > 0 ? config.menu[0].category : null;
+            }
+            
+            // Salvar no Firebase
+            const success = await saveConfigToFirebase();
+            if (success) {
+                alert('✅ Categoria excluída com sucesso!');
+                loadAdminDashboard();
+            }
+        }
+
+        async function deleteCategoryWithProducts(categoryName) {
+            const categoryIndex = config.menu.findIndex(cat => cat.category === categoryName);
+            
+            if (categoryIndex === -1) {
+                alert('❌ Categoria não encontrada!');
+                return;
+            }
+            
+            const category = config.menu[categoryIndex];
+            
+            if (category.products.length === 0) {
+                // Se estiver vazia, usa a função normal
+                await deleteCategory(categoryName);
+                return;
+            }
+            
+            // Para categorias com produtos, oferecer opção de mover ou excluir tudo
+            const action = confirm(`⚠️ A categoria "${categoryName}" contém ${category.products.length} produto(s).\n\nClique em "OK" para mover os produtos para outra categoria, ou "Cancelar" para excluir a categoria e TODOS os produtos.`);
+            
+            if (action) {
+                // Mover produtos
+                showMoveProductsDialog(categoryName);
+            } else {
+                // Excluir categoria com todos os produtos
+                if (confirm(`🚨 ATENÇÃO: Isso excluirá permanentemente a categoria "${categoryName}" e TODOS os ${category.products.length} produto(s) nela contidos.\n\nTem certeza?`)) {
+                    config.menu.splice(categoryIndex, 1);
+                    
+                    if (ADMIN_CONFIG.currentCategory === categoryName) {
+                        ADMIN_CONFIG.currentCategory = config.menu.length > 0 ? config.menu[0].category : null;
+                    }
+                    
+                    const success = await saveConfigToFirebase();
+                    if (success) {
+                        alert('✅ Categoria e produtos excluídos com sucesso!');
+                        loadAdminDashboard();
+                    }
+                }
+            }
+        }
+
+        function showMoveProductsDialog(fromCategoryName) {
+            const fromCategory = config.menu.find(cat => cat.category === fromCategoryName);
+            const otherCategories = config.menu.filter(cat => cat.category !== fromCategoryName);
+            
+            if (otherCategories.length === 0) {
+                alert('❌ Não há outras categorias para mover os produtos! Crie uma nova categoria primeiro.');
+                return;
+            }
+            
+            const adminContent = document.getElementById('admin-content');
+            adminContent.innerHTML = `
+                <div style="max-width: 600px;">
+                    <h3>📦 Mover Produtos</h3>
+                    <p>Movendo ${fromCategory.products.length} produto(s) da categoria <strong>"${fromCategoryName}"</strong></p>
+                    
+                    <div style="margin: 20px 0;">
+                        <label><strong>Selecione a categoria de destino:</strong></label>
+                        <select id="target-category" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; margin-top: 10px;">
+                            ${otherCategories.map(cat => `
+                                <option value="${cat.category}">${cat.category}</option>
+                            `).join('')}
+                        </select>
+                    </div>
+                    
+                    <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <strong>Produtos que serão movidos:</strong>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            ${fromCategory.products.map(product => `<li>${product.name}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="moveProducts('${fromCategoryName}')" style="padding: 12px 30px; background: #16a34a; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            ✅ Mover Produtos
+                        </button>
+                        <button onclick="loadAdminDashboard()" style="padding: 12px 30px; background: #6b7280; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            ↩️ Cancelar
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function moveProducts(fromCategoryName) {
+            const targetCategoryName = document.getElementById('target-category').value;
+            const fromCategoryIndex = config.menu.findIndex(cat => cat.category === fromCategoryName);
+            const targetCategory = config.menu.find(cat => cat.category === targetCategoryName);
+            
+            if (!targetCategory) {
+                alert('❌ Categoria de destino não encontrada!');
+                return;
+            }
+            
+            // Mover todos os produtos
+            const productsToMove = [...config.menu[fromCategoryIndex].products];
+            targetCategory.products.push(...productsToMove);
+            
+            // Limpar a categoria original
+            config.menu[fromCategoryIndex].products = [];
+            
+            // Agora excluir a categoria vazia
+            await deleteCategory(fromCategoryName);
+        }
+
         // Salvar configurações
         function saveConfigToLocalStorage() {
             localStorage.setItem('panificadoraConfig', JSON.stringify(config));
@@ -2258,17 +2552,14 @@ itemEl.innerHTML = `
         function exportConfig() {
             const dataStr = JSON.stringify(config, null, 2);
             const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
+            
             const link = document.createElement('a');
-            link.href = url;
-            link.download = 'backup-cardapio.json';
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = 'panificadora-config-backup.json';
             link.click();
-            URL.revokeObjectURL(url);
-            alert('✅ Backup exportado com sucesso!');
+            
+            alert('📥 Backup baixado com sucesso!');
         }
-
     </script>
 </body>
-
 </html>
-
