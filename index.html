@@ -61,7 +61,29 @@
     padding: 1rem; 
 }
         .top-bar { width: 100%; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .status-badge { background-color: var(--green); color: var(--white); padding: 0.3rem 0.8rem; border-radius: 9999px; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .status-badge { 
+            background-color: var(--green); 
+            color: var(--white); 
+            padding: 0.3rem 0.8rem; 
+            border-radius: 9999px; 
+            font-weight: bold; 
+            font-size: 0.8rem; 
+            display: flex; 
+            align-items: center; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            cursor: pointer; /* Torna clicável */
+            transition: all 0.3s ease;
+            user-select: none; /* Impede seleção de texto */
+        }
+        
+        .status-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .status-badge:active {
+            transform: scale(0.95);
+        }
         .status-badge .dot { width: 8px; height: 8px; background-color: var(--white); border-radius: 50%; margin-right: 0.5rem; }
         .cart-icon { position: relative; cursor: pointer; background-color: var(--white); border-radius: 50%; width: 44px; height: 44px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         .cart-count { position: absolute; top: -5px; right: -5px; background-color: var(--primary-color); color: var(--white); border-radius: 50%; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; font-size: 0.75rem; font-weight: bold; border: 1px solid var(--white); }
@@ -350,6 +372,188 @@
         .cart-footer { padding: 1rem; background: var(--white); box-shadow: 0 -2px 5px rgba(0,0,0,0.1); }
         .cart-total { display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem; }
         .finalize-btn { width: 100%; background-color: var(--green); color: var(--white); border: none; padding: 1rem; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+
+        /* =========================================== */
+        
+        /* =========================================== */
+
+        /* ===== PAINEL ADMIN RESPONSIVO ===== */
+        #admin-panel {
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        /* Layout responsivo para o painel de edição */
+        @media (max-width: 768px) {
+            /* Ajustes gerais do painel */
+            #admin-panel {
+                padding: 10px 5px;
+            }
+            
+            #admin-panel > div {
+                max-width: 100%;
+                margin: 0;
+                padding: 0 5px;
+            }
+            
+            /* Header do admin */
+            #admin-panel h2 {
+                font-size: 1.3rem;
+                text-align: center;
+            }
+            
+            /* Layout de edição em coluna única */
+            .product-edit-layout {
+                display: flex !important;
+                flex-direction: column !important;
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            
+            /* Cards de informações */
+            .admin-edit-section {
+                padding: 15px !important;
+                margin-bottom: 15px;
+            }
+            
+            .admin-edit-section h4 {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+                padding-bottom: 8px;
+            }
+            
+            /* Formulários em coluna única */
+            .admin-edit-section .form-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+            
+            /* Inputs maiores para mobile */
+            .admin-edit-section input,
+            .admin-edit-section textarea,
+            .admin-edit-section select {
+                padding: 12px !important;
+                font-size: 16px !important; /* Previne zoom no iOS */
+                min-height: 44px !important; /* Tamanho mínimo para toque */
+            }
+            
+            /* Acompanhamentos e bebidas */
+            .accompaniment-option,
+            .drink-option {
+                padding: 12px !important;
+            }
+            
+            .accompaniment-option > div,
+            .drink-option > div {
+                display: flex !important;
+                flex-direction: column !important;
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+            
+            /* Botões de ação */
+            .admin-action-buttons {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            
+            .admin-action-buttons button {
+                width: 100% !important;
+                padding: 15px !important;
+                font-size: 1.1rem !important;
+            }
+            
+            /* Container de opções com scroll */
+            #edit-accompaniments-options,
+            #edit-drinks-options {
+                max-height: 200px !important;
+            }
+            
+            /* Botões de adicionar opção */
+            .add-option-btn {
+                width: 100% !important;
+                padding: 15px !important;
+                font-size: 1rem !important;
+            }
+        }
+
+        /* Melhorias específicas para telas muito pequenas */
+        @media (max-width: 480px) {
+            .admin-edit-section {
+                padding: 12px !important;
+            }
+            
+            #admin-panel h3 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+            
+            .admin-edit-section h4 {
+                font-size: 1rem;
+            }
+        }
+
+        /* Estilos para os botões de backup/restauro */
+        .admin-card button {
+            transition: all 0.3s ease;
+        }
+
+        .admin-card button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .admin-card button:active {
+            transform: translateY(0);
+        }
+
+        /* Estilo para o input de arquivo */
+        input[type="file"] {
+            transition: all 0.3s ease;
+        }
+
+        input[type="file"]:hover {
+            border-color: #6d28d9 !important;
+            background: #faf5ff !important;
+        }
+
+        /* ===== SISTEMA DE PESQUISA ===== */
+        .admin-card {
+            transition: all 0.3s ease;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        #admin-search-input:focus {
+            outline: none;
+            border-color: #ff9800 !important;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+        }
+
+        #search-results {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Destaque para produtos encontrados */
+        .product-highlight {
+            animation: highlightPulse 2s ease;
+        }
+
+        @keyframes highlightPulse {
+            0% { background-color: transparent; }
+            50% { background-color: #fff3e0; }
+            100% { background-color: transparent; }
+        }
     </style>
 
     <!-- FIREBASE CONFIGURAÇÃO -->
@@ -404,10 +608,14 @@ document.addEventListener('DOMContentLoaded', function() {
 </head>
 <body>
 
+    <!-- REMOVIDO: Menu Hambúrguer Mobile -->
+
+    <!-- REMOVIDO: Botão Hambúrguer -->
+
     <div id="main-page">
         <header class="hero-section">
             <div class="top-bar">
-                <div class="status-badge"><span class="dot"></span>ABERTO</div>
+                <div class="status-badge" id="status-badge"><span class="dot"></span>ABERTO</div>
                 <div class="cart-icon" onclick="openCart()"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color);"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span class="cart-count" id="cart-count">0</span></div>
             </div>
         </header>
@@ -416,7 +624,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="shop-logo"><img id="shop-logo-main" src="" alt="Logo da Loja"></div>
             <div class="container">
                 <h1 class="shop-name" id="shop-name-main"></h1>
-                <div class="shop-details"><span>Horário de Funcionamento: Segunda a Sábado: 07h às 20h</span><span></span><span>Entrega grátis das 16h às 19h</span><span></span><span></span></div>
+                <div class="shop-details"><span>Horário de Funcionamento: Segunda a Sábado: 07h às 20h</span><span></span><span>Entrega grátis das 16h às 19h.</span><span></span><span></span></div>
             </div>
         </div>
 
@@ -442,7 +650,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <div class="footer-section">
             <h3>Horário de Funcionamento</h3>
-            <p>Segunda a Sábado: 06h às 20h</p>
+            <p>Segunda a Sábado: 07h às 20h</p>
             <p></p>
         </div>
          
@@ -460,7 +668,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <img src="./imagens/mastercard.png" alt="Mastercard" class="payment-icon">
               <img src="./imagens/elo.png" alt="Elo" class="payment-icon">
               <img src="./imagens/hipercard.png" alt="hipercard" class="payment-icon">
-              
+              <img src="https://zffprda1apista001.blob.core.windows.net/wordpress-img/assets-ecommerce/payment/pix.webp" alt="Pix" class="payment-icon">
         </div>
     </div>
     </div>
@@ -593,7 +801,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { 
             id: 1, 
             name: "Coxinha de frango", 
-            imageUrl: "https://cdn.awsli.com.br/1117/1117912/produto/54403219/coxinha-2-uvm771ucxs.png", 
+            imageUrl: "https://cdn.awsli.com/1117/1117912/produto/54403219/coxinha-2-uvm771ucxs.png", 
             oldPrice: 1.00, 
             newPrice: 0.50, 
             delivery: "Entrega grátis", 
@@ -1748,7 +1956,7 @@ function updateDrinkQuantity(drink, change, price) {
 
         // Sistema de acesso por atalho de teclado
         let adminKeySequence = [];
-        const ADMIN_SECRET_CODE = ['Control', 'Alt', 'a']; // Ctrl + Alt + A
+        const ADMIN_SECRET_CODE = ['F2',]; // Ctrl + Alt + A
 
         document.addEventListener('keydown', function(event) {
             adminKeySequence.push(event.key);
@@ -1777,12 +1985,49 @@ function updateDrinkQuantity(drink, change, price) {
             console.log('🔓 Botão admin ativado - Disponível por 10 segundos');
         }
 
+        // ===================================================================================
+        // =========================== ACESSO ADMIN PELO BOTÃO ABERTO =======================
+        // ===================================================================================
+
+        // Variável para controlar cliques rápidos
+        let adminClickCount = 0;
+        let adminClickTimer = null;
+
+        function setupAdminAccess() {
+            const statusBadge = document.getElementById('status-badge');
+            
+            if (statusBadge) {
+                // Adicionar evento de clique múltiplo para acesso admin
+                statusBadge.addEventListener('click', handleStatusBadgeClick);
+                statusBadge.style.cursor = 'pointer';
+            }
+        }
+
+        function handleStatusBadgeClick() {
+            adminClickCount++;
+            
+            // Resetar o timer se já existir um
+            if (adminClickTimer) {
+                clearTimeout(adminClickTimer);
+            }
+            
+            // Se for o terceiro clique rápido, abrir admin
+            if (adminClickCount >= 3) {
+                adminClickCount = 0;
+                openAdminLogin();
+                return;
+            }
+            
+            // Timer para resetar a contagem após 1 segundo
+            adminClickTimer = setTimeout(() => {
+                adminClickCount = 0;
+            }, 1000);
+        }
+
         function openAdminLogin() {
-            const password = prompt("🔐 Digite a senha de administrador:");
+            const password = prompt("🔐 Acesso Administrativo\n\nDigite a senha:");
             if (password === ADMIN_CONFIG.password) {
                 openAdminPanel();
-                // Esconde o botão após acesso bem-sucedido
-                document.getElementById('admin-access-area').style.display = 'none';
             } else if (password) {
                 alert("❌ Senha incorreta!");
             }
@@ -1801,6 +2046,11 @@ function updateDrinkQuantity(drink, change, price) {
             ADMIN_CONFIG.currentCategory = null;
         }
 
+        // Inicializar quando o DOM carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            setupAdminAccess();
+        });
+
         function loadAdminDashboard() {
             const adminContent = document.getElementById('admin-content');
             
@@ -1816,8 +2066,52 @@ function updateDrinkQuantity(drink, change, price) {
                         <h3 style="color: #15803d; margin-top: 0;">⚡ Ações Rápidas</h3>
                         <button onclick="showAddProductForm()" style="width: 100%; padding: 12px; background: #16a34a; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px 0; font-weight: bold;">➕ Adicionar Produto</button>
                         <button onclick="showAddCategoryForm()" style="width: 100%; padding: 12px; background: #f97316; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px 0; font-weight: bold;">📁 Nova Categoria</button>
-                        <button onclick="exportConfig()" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px 0; font-weight: bold;">💾 Backup dos Dados</button>
+                        
+                        <!-- Backup e Restauro -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 5px 0;">
+                            <button onclick="exportConfig()" style="padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                                💾 Backup
+                            </button>
+                            <button onclick="showRestoreBackupDialog()" style="padding: 12px; background: #8b5cf6; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                                🔄 Restaurar
+                            </button>
+                        </div>
                     </div>
+                </div>
+
+                <!-- ABA DE PESQUISA -->
+                <div class="admin-card" style="background: #fff3e0; padding: 20px; border-radius: 10px; border: 1px solid #ffb74d; margin-bottom: 30px;">
+                    <h3 style="color: #e65100; margin-top: 0;">🔍 Pesquisar por produto</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-bottom: 15px;">
+                        <input type="text" id="admin-search-input" placeholder="Digite o nome do produto, categoria, ID..." 
+                               style="width: 100%; padding: 12px; border: 2px solid #ff9800; border-radius: 8px; font-size: 16px;">
+                        <button onclick="performAdminSearch()" 
+                                style="padding: 12px 25px; background: #ff9800; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; white-space: nowrap;">
+                            🔍 Pesquisar
+                        </button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="checkbox" id="search-in-stock" checked> Em estoque
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="checkbox" id="search-out-of-stock"> Sem estoque
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="checkbox" id="search-by-id" style="margin-left: 15px;"> Buscar por ID
+                        </label>
+                    </div>
+                    
+                    <div id="search-results" style="display: none;">
+                        <div style="border-top: 2px solid #ffb74d; padding-top: 15px;">
+                            <h4 style="color: #e65100; margin-bottom: 15px;">📋 Resultados da Pesquisa</h4>
+                            <div id="search-results-content"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="search-stats" style="margin-top: 10px; font-size: 0.9em; color: #e65100;"></div>
                 </div>
                 
                 <div class="admin-card" style="background: white; padding: 20px; border-radius: 10px; border: 1px solid #e5e7eb;">
@@ -1828,6 +2122,9 @@ function updateDrinkQuantity(drink, change, price) {
                     </div>
                 </div>
             `;
+            
+            // Adicionar event listener para Enter na pesquisa
+            setTimeout(addSearchEventListener, 100);
         }
 
         function renderCategoryTabs() {
@@ -2041,136 +2338,157 @@ function updateDrinkQuantity(drink, change, price) {
             const adminContent = document.getElementById('admin-content');
             
             adminContent.innerHTML = `
-                <div style="max-width: 100%;">
-                    <h3 style="color: #f97316; margin-bottom: 20px;">✏️ Editar Produto: ${product.name}</h3>
+                <div style="width: 100%;">
+                    <h3 style="color: #f97316; margin-bottom: 20px; font-size: clamp(1.2rem, 4vw, 1.5rem);">✏️ Editar Produto: ${product.name}</h3>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+                    <div class="product-edit-layout" style="display: grid; grid-template-columns: 1fr; gap: 20px; align-items: start;">
                         
-                        <!-- COLUNA DA ESQUERDA - INFORMAÇÕES BÁSICAS -->
-                        <div style="background: white; padding: 20px; border-radius: 10px; border: 1px solid #e5e7eb;">
+                        <!-- INFORMAÇÕES BÁSICAS -->
+                        <div class="admin-edit-section" style="background: white; padding: 20px; border-radius: 10px; border: 1px solid #e5e7eb;">
                             <h4 style="color: #374151; margin-top: 0; border-bottom: 2px solid #f97316; padding-bottom: 10px;">📋 Informações Básicas</h4>
                             
                             <form onsubmit="saveEditedProduct(event)" style="display: grid; gap: 15px;">
                                 <input type="hidden" id="edit-product-id" value="${product.id}">
                                 
-                                <div>
-                                    <label><strong>Nome do Produto:</strong></label>
-                                    <input type="text" id="edit-product-name" value="${product.name}" required style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;">
-                                </div>
-                                
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div class="form-grid" style="display: grid; gap: 15px;">
                                     <div>
-                                        <label><strong>Preço Atual (R$):</strong></label>
-                                        <input type="number" id="edit-product-newPrice" step="0.01" value="${product.newPrice}" required style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;">
+                                        <label><strong>Nome do Produto:</strong></label>
+                                        <input type="text" id="edit-product-name" value="${product.name}" required 
+                                               style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;">
                                     </div>
+                                    
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                        <div>
+                                            <label><strong>Preço Atual (R$):</strong></label>
+                                            <input type="number" id="edit-product-newPrice" step="0.01" value="${product.newPrice}" required 
+                                                   style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;">
+                                        </div>
+                                        <div>
+                                            <label><strong>Preço Antigo:</strong></label>
+                                            <input type="number" id="edit-product-oldPrice" step="0.01" value="${product.oldPrice || ''}" 
+                                                   style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;" 
+                                                   placeholder="Opcional">
+                                        </div>
+                                    </div>
+                                    
                                     <div>
-                                        <label><strong>Preço Antigo (opcional):</strong></label>
-                                        <input type="number" id="edit-product-oldPrice" step="0.01" value="${product.oldPrice || ''}" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;">
+                                        <label><strong>URL da Imagem:</strong></label>
+                                        <input type="text" id="edit-product-imageUrl" value="${product.imageUrl}" 
+                                               style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;" 
+                                               placeholder="https://...">
                                     </div>
-                                </div>
-                                
-                                <div>
-                                    <label><strong>URL da Imagem:</strong></label>
-                                    <input type="text" id="edit-product-imageUrl" value="${product.imageUrl}" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;" placeholder="https://...">
-                                </div>
-                                
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                    
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                        <div>
+                                            <label><strong>Estoque:</strong></label>
+                                            <input type="number" id="edit-product-stock" value="${product.stock || ''}" 
+                                                   style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;" 
+                                                   placeholder="Quantidade">
+                                        </div>
+                                        <div>
+                                            <label><strong>Entrega:</strong></label>
+                                            <input type="text" id="edit-product-delivery" value="${product.delivery || ''}" 
+                                                   style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;" 
+                                                   placeholder="Entrega grátis">
+                                        </div>
+                                    </div>
+                                    
                                     <div>
-                                        <label><strong>Estoque:</strong></label>
-                                        <input type="number" id="edit-product-stock" value="${product.stock || ''}" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;">
+                                        <label><strong>Descrição:</strong></label>
+                                        <textarea id="edit-product-description" 
+                                                  style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 5px; height: 80px; resize: vertical; font-size: 16px; min-height: 80px;">${product.description || ''}</textarea>
                                     </div>
-                                    <div>
-                                        <label><strong>Entrega:</strong></label>
-                                        <input type="text" id="edit-product-delivery" value="${product.delivery || ''}" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;" placeholder="Entrega grátis">
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <label><strong>Descrição:</strong></label>
-                                    <textarea id="edit-product-description" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; height: 80px; resize: vertical;">${product.description || ''}</textarea>
                                 </div>
                             </form>
                         </div>
                         
-                        <!-- COLUNA DA DIREITA - ACOMPANHAMENTOS E BEBIDAS -->
-                        <div style="display: grid; gap: 20px;">
+                        <!-- ACOMPANHAMENTOS -->
+                        <div class="admin-edit-section" style="background: white; padding: 20px; border-radius: 10px; border: 1px solid #e5e7eb;">
+                            <h4 style="color: #374151; margin-top: 0; border-bottom: 2px solid #f97316; padding-bottom: 10px;">🍽️ Acompanhamentos</h4>
                             
-                            <!-- SEÇÃO ACOMPANHAMENTOS -->
-                            <div style="background: white; padding: 20px; border-radius: 10px; border: 1px solid #e5e7eb;">
-                                <h4 style="color: #374151; margin-top: 0; border-bottom: 2px solid #f97316; padding-bottom: 10px;">🍽️ Acompanhamentos</h4>
-                                
-                                <div style="margin-bottom: 15px;">
-                                    <label><strong>Limite de Acompanhamentos:</strong></label>
-                                    <input type="number" id="edit-product-accomp-limit" value="${product.accompaniments?.limit || 0}" min="0" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;">
-                                </div>
-                                
-                                <button type="button" onclick="addAccompanimentOption()" style="width: 100%; padding: 12px; background: #f97316; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px; font-weight: bold;">
-                                    ➕ Adicionar Opção de Acompanhamento
-                                </button>
-                                
-                                <div id="edit-accompaniments-options" style="max-height: 300px; overflow-y: auto; display: grid; gap: 10px;">
-                                    ${product.accompaniments?.options?.map((option, index) => `
-                                        <div class="accompaniment-option" style="border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; background: #f9fafb;">
-                                            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;">
-                                                <div>
-                                                    <label><small>Nome:</small></label>
-                                                    <input type="text" value="${option.name}" class="accomp-name" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;">
-                                                </div>
-                                                <div>
-                                                    <label><small>Preço (R$):</small></label>
-                                                    <input type="number" step="0.01" value="${option.price}" class="accomp-price" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;">
-                                                </div>
-                                                <button type="button" onclick="removeAccompanimentOption(this)" style="padding: 8px 12px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                                                    🗑️
-                                                </button>
-                                            </div>
-                                        </div>
-                                    `).join('') || ''}
-                                </div>
+                            <div style="margin-bottom: 15px;">
+                                <label><strong>Limite de Acompanhamentos:</strong></label>
+                                <input type="number" id="edit-product-accomp-limit" value="${product.accompaniments?.limit || 0}" min="0" 
+                                       style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;">
                             </div>
                             
-                            <!-- SEÇÃO BEBIDAS -->
-                            <div style="background: white; padding: 20px; border-radius: 10px; border: 1px solid #e5e7eb;">
-                                <h4 style="color: #374151; margin-top: 0; border-bottom: 2px solid #3b82f6; padding-bottom: 10px;">🥤 Bebidas</h4>
-                                
-                                <div style="margin-bottom: 15px;">
-                                    <label><strong>Limite de Bebidas:</strong></label>
-                                    <input type="number" id="edit-product-drinks-limit" value="${product.drinks?.limit || 0}" min="0" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px;">
-                                </div>
-                                
-                                <button type="button" onclick="addDrinkOption()" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px; font-weight: bold;">
-                                    ➕ Adicionar Opção de Bebida
-                                </button>
-                                
-                                <div id="edit-drinks-options" style="max-height: 300px; overflow-y: auto; display: grid; gap: 10px;">
-                                    ${product.drinks?.options?.map((drink, index) => `
-                                        <div class="drink-option" style="border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; background: #f9fafb;">
-                                            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;">
-                                                <div>
-                                                    <label><small>Nome:</small></label>
-                                                    <input type="text" value="${drink.name}" class="drink-name" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;">
-                                                </div>
-                                                <div>
-                                                    <label><small>Preço (R$):</small></label>
-                                                    <input type="number" step="0.01" value="${drink.price}" class="drink-price" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;">
-                                                </div>
-                                                <button type="button" onclick="removeDrinkOption(this)" style="padding: 8px 12px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                                                    🗑️
-                                                </button>
+                            <button type="button" onclick="addAccompanimentOption()" class="add-option-btn"
+                                    style="width: 100%; padding: 15px; background: #f97316; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px; font-weight: bold; font-size: 1rem;">
+                                ➕ Adicionar Acompanhamento
+                            </button>
+                            
+                            <div id="edit-accompaniments-options" style="max-height: 300px; overflow-y: auto; display: grid; gap: 12px;">
+                                ${product.accompaniments?.options?.map((option, index) => `
+                                    <div class="accompaniment-option" style="border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; background: #f9fafb;">
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;">
+                                            <div>
+                                                <label><small>Nome:</small></label>
+                                                <input type="text" value="${option.name}" class="accomp-name" 
+                                                       style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;">
                                             </div>
+                                            <div>
+                                                <label><small>Preço (R$):</small></label>
+                                                <input type="number" step="0.01" value="${option.price}" class="accomp-price" 
+                                                       style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;">
+                                            </div>
+                                            <button type="button" onclick="removeAccompanimentOption(this)" 
+                                                    style="padding: 10px 12px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer; min-height: 44px;">
+                                                🗑️
+                                            </button>
                                         </div>
-                                    `).join('') || ''}
-                                </div>
+                                    </div>
+                                `).join('') || ''}
+                            </div>
+                        </div>
+                        
+                        <!-- BEBIDAS -->
+                        <div class="admin-edit-section" style="background: white; padding: 20px; border-radius: 10px; border: 1px solid #e5e7eb;">
+                            <h4 style="color: #374151; margin-top: 0; border-bottom: 2px solid #3b82f6; padding-bottom: 10px;">🥤 Bebidas</h4>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <label><strong>Limite de Bebidas:</strong></label>
+                                <input type="number" id="edit-product-drinks-limit" value="${product.drinks?.limit || 0}" min="0" 
+                                       style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;">
+                            </div>
+                            
+                            <button type="button" onclick="addDrinkOption()" class="add-option-btn"
+                                    style="width: 100%; padding: 15px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px; font-weight: bold; font-size: 1rem;">
+                                ➕ Adicionar Bebida
+                            </button>
+                            
+                            <div id="edit-drinks-options" style="max-height: 300px; overflow-y: auto; display: grid; gap: 12px;">
+                                ${product.drinks?.options?.map((drink, index) => `
+                                    <div class="drink-option" style="border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; background: #f9fafb;">
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;">
+                                            <div>
+                                                <label><small>Nome:</small></label>
+                                                <input type="text" value="${drink.name}" class="drink-name" 
+                                                       style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;">
+                                            </div>
+                                            <div>
+                                                <label><small>Preço (R$):</small></label>
+                                                <input type="number" step="0.01" value="${drink.price}" class="drink-price" 
+                                                       style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;">
+                                            </div>
+                                            <button type="button" onclick="removeDrinkOption(this)" 
+                                                    style="padding: 10px 12px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer; min-height: 44px;">
+                                                🗑️
+                                            </button>
+                                        </div>
+                                    </div>
+                                `).join('') || ''}
                             </div>
                         </div>
                     </div>
                     
-                    <!-- BOTÕES DE AÇÃO NO FINAL -->
-                    <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e5e7eb; display: flex; gap: 15px; justify-content: center;">
-                        <button type="submit" onclick="document.querySelector('form').requestSubmit()" style="padding: 15px 40px; background: #16a34a; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1em;">
-                            💾 Salvar Alterações
+                    <!-- BOTÕES DE AÇÃO -->
+                    <div class="admin-action-buttons" style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e5e7eb; display: flex; gap: 15px; justify-content: center;">
+                        <button type="submit" onclick="document.querySelector('form').requestSubmit()" 
+                                style="padding: 15px 25px; background: #16a34a; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1em; min-height: 50px;">
+                            💾 Salvar
                         </button>
-                        <button type="button" onclick="loadAdminDashboard()" style="padding: 15px 40px; background: #6b7280; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1em;">
+                        <button type="button" onclick="loadAdminDashboard()" 
+                                style="padding: 15px 25px; background: #6b7280; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1em; min-height: 50px;">
                             ↩️ Voltar
                         </button>
                     </div>
@@ -2187,13 +2505,17 @@ function updateDrinkQuantity(drink, change, price) {
                     <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;">
                         <div>
                             <label><small>Nome:</small></label>
-                            <input type="text" class="accomp-name" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;" placeholder="Ex: Quantidade, Molho...">
+                            <input type="text" class="accomp-name" 
+                                   style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;" 
+                                   placeholder="Ex: Quantidade, Molho...">
                         </div>
                         <div>
                             <label><small>Preço (R$):</small></label>
-                            <input type="number" step="0.01" value="0" class="accomp-price" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;">
+                            <input type="number" step="0.01" value="0" class="accomp-price" 
+                                   style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;">
                         </div>
-                        <button type="button" onclick="removeAccompanimentOption(this)" style="padding: 8px 12px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        <button type="button" onclick="removeAccompanimentOption(this)" 
+                                style="padding: 10px 12px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer; min-height: 44px;">
                             🗑️
                         </button>
                     </div>
@@ -2211,13 +2533,17 @@ function updateDrinkQuantity(drink, change, price) {
                     <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;">
                         <div>
                             <label><small>Nome:</small></label>
-                            <input type="text" class="drink-name" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;" placeholder="Ex: Refrigerante, Suco...">
+                            <input type="text" class="drink-name" 
+                                   style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;" 
+                                   placeholder="Ex: Refrigerante, Suco...">
                         </div>
                         <div>
                             <label><small>Preço (R$):</small></label>
-                            <input type="number" step="0.01" value="0" class="drink-price" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 5px;">
+                            <input type="number" step="0.01" value="0" class="drink-price" 
+                                   style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 16px;">
                         </div>
-                        <button type="button" onclick="removeDrinkOption(this)" style="padding: 8px 12px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        <button type="button" onclick="removeDrinkOption(this)" 
+                                style="padding: 10px 12px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer; min-height: 44px;">
                             🗑️
                         </button>
                     </div>
@@ -2332,6 +2658,188 @@ function updateDrinkQuantity(drink, change, price) {
             if (success) {
                 alert('✅ Produto excluído com sucesso!');
                 loadAdminDashboard();
+            }
+        }
+
+        // ===================================================================================
+        // =========================== SISTEMA DE PESQUISA ADMIN =============================
+        // ===================================================================================
+
+        function performAdminSearch() {
+            const searchTerm = document.getElementById('admin-search-input').value.trim().toLowerCase();
+            const searchInStock = document.getElementById('search-in-stock').checked;
+            const searchOutOfStock = document.getElementById('search-out-of-stock').checked;
+            const searchById = document.getElementById('search-by-id').checked;
+            
+            if (!searchTerm) {
+                alert('🔍 Digite algo para pesquisar!');
+                return;
+            }
+            
+            const results = [];
+            let searchCount = 0;
+            
+            // Pesquisar em todas as categorias
+            config.menu.forEach(category => {
+                category.products.forEach(product => {
+                    let matches = false;
+                    
+                    if (searchById && product.id.toString().includes(searchTerm)) {
+                        matches = true;
+                    } else if (!searchById && (
+                        product.name.toLowerCase().includes(searchTerm) ||
+                        (product.description && product.description.toLowerCase().includes(searchTerm)) ||
+                        category.category.toLowerCase().includes(searchTerm)
+                    )) {
+                        matches = true;
+                    }
+                    
+                    if (matches) {
+                        // Verificar filtro de estoque
+                        const hasStock = product.stock > 0;
+                        if ((searchInStock && hasStock) || (searchOutOfStock && !hasStock) || (!searchInStock && !searchOutOfStock)) {
+                            results.push({
+                                category: category.category,
+                                product: product
+                            });
+                        }
+                        searchCount++;
+                    }
+                });
+            });
+            
+            displaySearchResults(results, searchCount, searchTerm);
+        }
+
+        function displaySearchResults(results, totalCount, searchTerm) {
+            const resultsContainer = document.getElementById('search-results');
+            const resultsContent = document.getElementById('search-results-content');
+            const statsElement = document.getElementById('search-stats');
+            
+            if (results.length === 0) {
+                resultsContent.innerHTML = `
+                    <div style="text-align: center; padding: 30px; color: #666; background: #f5f5f5; border-radius: 8px;">
+                        <div style="font-size: 3em; margin-bottom: 10px;">🔍</div>
+                        <h4 style="color: #666; margin-bottom: 10px;">Nenhum produto encontrado</h4>
+                        <p>Tente usar termos diferentes ou verificar os filtros aplicados.</p>
+                    </div>
+                `;
+                statsElement.innerHTML = `❌ Nenhum resultado encontrado para "${searchTerm}"`;
+            } else {
+                resultsContent.innerHTML = `
+                    <div style="display: grid; gap: 12px;">
+                        ${results.map((result, index) => `
+                            <div style="border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; background: white; display: flex; justify-content: space-between; align-items: center;">
+                                <div style="flex: 1;">
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                        <strong style="font-size: 1.1em; color: #1f2937;">${result.product.name}</strong>
+                                        <span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; font-weight: bold;">
+                                            ${formatPrice(result.product.newPrice)}
+                                        </span>
+                                        ${result.product.oldPrice ? `
+                                            <span style="text-decoration: line-through; color: #6b7280; font-size: 0.9em;">
+                                                ${formatPrice(result.product.oldPrice)}
+                                            </span>
+                                        ` : ''}
+                                    </div>
+                                    <div style="color: #6b7280; font-size: 0.9em;">
+                                        <strong>Categoria:</strong> ${result.category} 
+                                        | <strong>ID:</strong> ${result.product.id}
+                                        ${result.product.stock ? `| <strong>Estoque:</strong> ${result.product.stock}` : '| <strong>Estoque:</strong> Sem limite'}
+                                        ${result.product.stock === 0 ? '<span style="color: #ef4444; font-weight: bold;"> (ESGOTADO)</span>' : ''}
+                                    </div>
+                                    ${result.product.description ? `
+                                        <div style="color: #6b7280; font-size: 0.85em; margin-top: 5px; font-style: italic;">
+                                            "${result.product.description}"
+                                        </div>
+                                    ` : ''}
+                                </div>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="editProductFromSearch(${result.product.id})" 
+                                            style="padding: 8px 12px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em;">
+                                        ✏️ Editar
+                                    </button>
+                                    <button onclick="viewProductInCategory('${result.category}', ${result.product.id})" 
+                                            style="padding: 8px 12px; background: #8b5cf6; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em;">
+                                        👁️ Ver
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                statsElement.innerHTML = `✅ Encontrados ${results.length} de ${totalCount} produtos para "${searchTerm}"`;
+            }
+            
+            resultsContainer.style.display = 'block';
+            
+            // Scroll suave para os resultados
+            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function editProductFromSearch(productId) {
+            // Fechar resultados da pesquisa
+            document.getElementById('search-results').style.display = 'none';
+            
+            // Encontrar a categoria do produto
+            let productCategory = null;
+            for (const category of config.menu) {
+                const product = category.products.find(p => p.id === productId);
+                if (product) {
+                    productCategory = category.category;
+                    break;
+                }
+            }
+            
+            if (productCategory) {
+                // Selecionar a categoria e editar o produto
+                selectAdminCategory(productCategory);
+                setTimeout(() => {
+                    editProductAdmin(productId);
+                }, 100);
+            } else {
+                alert('❌ Produto não encontrado!');
+            }
+        }
+
+        function viewProductInCategory(categoryName, productId) {
+            // Fechar resultados da pesquisa
+            document.getElementById('search-results').style.display = 'none';
+            
+            // Selecionar a categoria
+            selectAdminCategory(categoryName);
+            
+            // Scroll para o produto na lista (implementação básica)
+            setTimeout(() => {
+                const productElement = document.querySelector(`[onclick="editProductAdmin(${productId})"]`);
+                if (productElement) {
+                    productElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Destacar o produto
+                    const productCard = productElement.closest('div[style*="border: 1px solid #e5e7eb"]');
+                    if (productCard) {
+                        const originalBorder = productCard.style.border;
+                        productCard.style.border = '2px solid #ff9800';
+                        productCard.style.boxShadow = '0 0 10px rgba(255, 152, 0, 0.3)';
+                        
+                        setTimeout(() => {
+                            productCard.style.border = originalBorder;
+                            productCard.style.boxShadow = 'none';
+                        }, 3000);
+                    }
+                }
+            }, 200);
+        }
+
+        function addSearchEventListener() {
+            const searchInput = document.getElementById('admin-search-input');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        performAdminSearch();
+                    }
+                });
             }
         }
 
@@ -2549,18 +3057,212 @@ function updateDrinkQuantity(drink, change, price) {
             }
         }
 
+        // ===================================================================================
+        // =========================== SISTEMA DE BACKUP E RESTAURAÇÃO ======================
+        // ===================================================================================
+
         function exportConfig() {
-            const dataStr = JSON.stringify(config, null, 2);
+            // Adicionar metadados ao backup
+            const backupData = {
+                ...config,
+                _metadata: {
+                    exportDate: new Date().toISOString(),
+                    totalProducts: getTotalProducts(),
+                    totalCategories: config.menu.length,
+                    version: '1.0'
+                }
+            };
+            
+            const dataStr = JSON.stringify(backupData, null, 2);
             const dataBlob = new Blob([dataStr], {type: 'application/json'});
             
             const link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = 'panificadora-config-backup.json';
+            link.download = `backup-${config.shop.name.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.json`;
             link.click();
             
-            alert('📥 Backup baixado com sucesso!');
+            alert('📥 Backup baixado com sucesso!\n\nArquivo: ' + link.download);
+        }
+
+        function showRestoreBackupDialog() {
+            const adminContent = document.getElementById('admin-content');
+            
+            adminContent.innerHTML = `
+                <div style="max-width: 600px;">
+                    <h3 style="color: #8b5cf6; margin-bottom: 20px;">🔄 Restaurar Backup</h3>
+                    
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 10px; border: 2px dashed #cbd5e1; margin-bottom: 20px;">
+                        <h4 style="color: #475569; margin-top: 0;">📁 Selecione o arquivo de backup</h4>
+                        <p style="color: #64748b; margin-bottom: 15px;">
+                            Selecione o arquivo JSON de backup para restaurar os dados da loja.
+                        </p>
+                        
+                        <input type="file" id="backup-file" accept=".json" 
+                               style="width: 100%; padding: 15px; border: 2px dashed #8b5cf6; border-radius: 8px; background: white; cursor: pointer;"
+                               onchange="previewBackupFile(this)">
+                        
+                        <div id="backup-preview" style="margin-top: 15px; display: none;">
+                            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                                <h5 style="color: #334155; margin-top: 0;">📋 Prévia do Backup:</h5>
+                                <div id="backup-info" style="font-size: 0.9em; color: #475569;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <button onclick="restoreBackup()" id="restore-btn" 
+                                style="padding: 15px; background: #8b5cf6; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;"
+                                disabled>
+                            🔄 Restaurar Dados
+                        </button>
+                        <button onclick="loadAdminDashboard()" 
+                                style="padding: 15px; background: #6b7280; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                            ↩️ Cancelar
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding: 15px; background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px;">
+                        <h5 style="color: #92400e; margin-top: 0;">⚠️ Atenção</h5>
+                        <p style="color: #92400e; margin: 0; font-size: 0.9em;">
+                            A restauração de backup substituirá TODOS os dados atuais da loja. 
+                            Esta ação não pode ser desfeita. Recomendamos fazer um backup atual antes de restaurar.
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function previewBackupFile(input) {
+            const file = input.files[0];
+            const preview = document.getElementById('backup-preview');
+            const backupInfo = document.getElementById('backup-info');
+            const restoreBtn = document.getElementById('restore-btn');
+            
+            if (!file) {
+                preview.style.display = 'none';
+                restoreBtn.disabled = true;
+                return;
+            }
+            
+            if (file.type !== 'application/json') {
+                alert('❌ Por favor, selecione um arquivo JSON válido.');
+                input.value = '';
+                preview.style.display = 'none';
+                restoreBtn.disabled = true;
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const backupData = JSON.parse(e.target.result);
+                    
+                    // Validar estrutura do backup
+                    if (!isValidBackup(backupData)) {
+                        throw new Error('Estrutura de backup inválida');
+                    }
+                    
+                    const totalProducts = backupData.menu ? 
+                        backupData.menu.reduce((total, cat) => total + cat.products.length, 0) : 0;
+                    const totalCategories = backupData.menu ? backupData.menu.length : 0;
+                    
+                    backupInfo.innerHTML = `
+                        <p><strong>Loja:</strong> ${backupData.shop?.name || 'Não identificada'}</p>
+                        <p><strong>Categorias:</strong> ${totalCategories}</p>
+                        <p><strong>Produtos:</strong> ${totalProducts}</p>
+                        <p><strong>WhatsApp:</strong> ${backupData.whatsappNumber || 'Não configurado'}</p>
+                        <p><strong>Data do Backup:</strong> ${new Date().toLocaleString()}</p>
+                    `;
+                    
+                    preview.style.display = 'block';
+                    restoreBtn.disabled = false;
+                    
+                } catch (error) {
+                    console.error('Erro ao ler backup:', error);
+                    alert('❌ Arquivo de backup inválido ou corrompido.');
+                    input.value = '';
+                    preview.style.display = 'none';
+                    restoreBtn.disabled = true;
+                }
+            };
+            
+            reader.onerror = function() {
+                alert('❌ Erro ao ler o arquivo.');
+                preview.style.display = 'none';
+                restoreBtn.disabled = true;
+            };
+            
+            reader.readAsText(file);
+        }
+
+        function isValidBackup(data) {
+            return data && 
+                   typeof data === 'object' &&
+                   Array.isArray(data.menu) &&
+                   data.shop &&
+                   typeof data.shop === 'object' &&
+                   data.whatsappNumber;
+        }
+
+        async function restoreBackup() {
+            const fileInput = document.getElementById('backup-file');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('❌ Por favor, selecione um arquivo de backup primeiro.');
+                return;
+            }
+            
+            if (!confirm('🚨 ATENÇÃO: Esta ação substituirá TODOS os dados atuais da loja.\n\nTem certeza que deseja continuar?')) {
+                return;
+            }
+            
+            try {
+                const reader = new FileReader();
+                
+                reader.onload = async function(e) {
+                    try {
+                        const backupData = JSON.parse(e.target.result);
+                        
+                        if (!isValidBackup(backupData)) {
+                            throw new Error('Estrutura de backup inválida');
+                        }
+                        
+                        // Atualizar a configuração
+                        Object.assign(config, backupData);
+                        
+                        // Salvar no Firebase
+                        const success = await saveConfigToFirebase();
+                        
+                        if (success) {
+                            alert('✅ Backup restaurado com sucesso!');
+                            
+                            // Recarregar a página para aplicar as mudanças
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            alert('❌ Erro ao salvar no Firebase. Verifique a conexão.');
+                        }
+                        
+                    } catch (error) {
+                        console.error('Erro ao restaurar backup:', error);
+                        alert('❌ Erro ao restaurar backup: ' + error.message);
+                    }
+                };
+                
+                reader.onerror = function() {
+                    alert('❌ Erro ao ler o arquivo de backup.');
+                };
+                
+                reader.readAsText(file);
+                
+            } catch (error) {
+                console.error('Erro no processo de restauração:', error);
+                alert('❌ Erro inesperado ao restaurar backup.');
+            }
         }
     </script>
 </body>
 </html>
-
