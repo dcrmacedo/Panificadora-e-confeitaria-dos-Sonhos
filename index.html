@@ -608,9 +608,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </head>
 <body>
 
-    <!-- REMOVIDO: Menu Hambúrguer Mobile -->
-
-    <!-- REMOVIDO: Botão Hambúrguer -->
 
     <div id="main-page">
         <header class="hero-section">
@@ -619,6 +616,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="cart-icon" onclick="openCart()"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color);"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span class="cart-count" id="cart-count">0</span></div>
             </div>
         </header>
+        <div class="search-icon" onclick="openSearch()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+    </div>
         
         <div class="shop-info-container">
             <div class="shop-logo"><img id="shop-logo-main" src="" alt="Logo da Loja"></div>
@@ -795,102 +798,67 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     },
     menu: [
-        {
+       {
     category: "Promoções",
     products: [
         { 
             id: 1, 
-            name: "Coxinha de frango", 
-            imageUrl: "https://cdn.awsli.com/1117/1117912/produto/54403219/coxinha-2-uvm771ucxs.png", 
-            oldPrice: 1.00, 
-            newPrice: 0.50, 
+            name: "Nescauzinho 180ml", 
+            imageUrl: "./imagens/nescauzinho.jpg", 
+            oldPrice: 4.99, 
+            newPrice: 3.00, 
             delivery: "Entrega grátis", 
-            stock: 36, 
-            description: "Coxinha crocante com recheio de frango", 
+            stock: 8, 
+            description: "Nescauzinho 180ml delicioso", 
             accompaniments: { 
-                limit: 10,
+                limit: 1,
                 options: [
-                    { name: "Quantidade de coxinha", price: 0.50 }
+                    { name: "Quantidade", price: 3.00 }
                 ] 
             },
             drinks: {
-                limit: 6,
-                options: [
-                    { name: "Refrigerante Lata 350ml", price: 5.00 },
-                    { name: "Suco Natural 500ml", price: 5.00 },
-                    { name: "Água Mineral 500ml", price: 3.00 }
-                ]
+                limit: 0,
+                options: []
             }
         },
         { 
             id: 2, 
-            name: "Biscoito de goiaba", 
-            imageUrl: "https://minhasreceitinhas.com.br/wp-content/uploads/2023/08/biscoito-de-maizena-com-goiabada.jpg", 
-            oldPrice: 1.00, 
-            newPrice: 0.75, 
+            name: "Todóynho 200ml", 
+            imageUrl: "./imagens/todoynho.jpg", 
+            oldPrice: 5.99, 
+            newPrice: 4.00, 
             delivery: "Entrega grátis", 
-            stock: 25, 
-            description: "Biscoito caseiro com goiabada", 
+            stock: 10, 
+            description: "Todóynho 200ml nutritivo", 
             accompaniments: { 
-                limit: 6, 
+                limit: 1,
                 options: [
-                    { name: "Quantidade de Biscoito", price: 0.75 }
+                    { name: "Quantidade", price: 4.00 }
                 ] 
             },
             drinks: {
-                limit: 6,
-                options: [
-                    { name: "Refrigerante Lata 350ml", price: 5.00 },
-                    { name: "Suco Natural 500ml", price: 8.00 },
-                    { name: "Água Mineral 500ml", price: 3.00 }
-                ]
+                limit: 0,
+                options: []
             }
         },
         { 
             id: 3, 
-            name: "Teste", 
-            imageUrl: "", 
-            oldPrice: 1.00, 
-            newPrice: 0.75, 
+            name: "IOGURTE 300G", 
+            imageUrl: "./imagens/iogurte.jpg", 
+            oldPrice: 6.50, 
+            newPrice: 5.99, 
             delivery: "Entrega grátis", 
-            stock: 25, 
-            description: "***********************", 
+            stock: 10, 
+            description: "Iogurte cremoso 300g", 
             accompaniments: { 
-                limit: 6, 
+                limit: 1,
                 options: [
-                    { name: "Quantidade de ******", price: 0.75 }
+                    { name: "Quantidade", price: 5.99 }
                 ] 
             },
             drinks: {
-                limit: 6,
-                options: [
-                    { name: "Refrigerante Lata 350ml", price: 5.00 },
-                    { name: "Suco Natural 500ml", price: 8.00 },
-                    { name: "Água Mineral 500ml", price: 3.00 }
-                ]
-            }
-        },
-        { 
-            id: 4, 
-            name: "Pão de Queijo", 
-            imageUrl: "https://paoearte.com/wp-content/uploads/2022/11/pao_queijo_tradicional-scaled.jpg", 
-            oldPrice: 1.50, 
-            newPrice: 1.00, 
-            delivery: "Entrega grátis", 
-            stock: 20, 
-            description: "Pão de queijo quentinho e derretendo", 
-            accompaniments: { 
-                limit: 8, 
-                options: [
-                    { name: "Quantidade de Pão de Queijo", price: 1.00 }
-                ] 
-            },
-            drinks: {
-                limit: 4,
-                options: [
-                    { name: "Café Expresso", price: 3.00 },
-                    { name: "Suco de Laranja 300ml", price: 6.00 }
-                ]
+                limit: 0,
+                options: []
             }
         }
     ]
@@ -898,56 +866,33 @@ document.addEventListener('DOMContentLoaded', function() {
         
           
         {
-            category: "Lanches",
-            products: [
-                    { 
-                        id: 5, 
-                        name: "Pastel de Queijo", 
-                        imageUrl: "https://superrissul.vtexassets.com/arquivos/ids/905195-800-auto?v=638941546428270000&width=800&height=auto&aspect=trueo", 
-                        newPrice: 3.00, 
-                        delivery: "Entrega grátis", 
-                        stock: 15, 
-                        description: "",
-                        accompaniments: { 
-                            limit: 6, 
-                            options: [
-                                { name: "Quantidade", price: 3.00 },
-                            
-                            ] 
-                        },
-                        drinks: {
-                            limit: 6,
-                            options: [
-                                { name: "Refrigerante 600ml", price: 7.00 },
-                                { name: "Suco Natural 500ml", price: 8.00 }
-                            ]
-                        }
-                    },
-                ]
+    category: "Lanches",
+    products: [
+        { 
+            id: 5, 
+            name: "Pastel de Queijo", 
+            imageUrl: "https://superrissul.vtexassets.com/arquivos/ids/905195-800-auto?v=638941546428270000&width=800&height=auto&aspect=trueo", 
+            newPrice: 3.00, 
+            delivery: "Entrega grátis", 
+            stock: 15, 
+            description: "",
+            accompaniments: { 
+                limit: 6, 
+                options: [
+                    { name: "Quantidade", price: 3.00 },
+                ] 
             },
-        {
-            category: "Bebidas",
-            products: [
-                { 
-                    id: 101, 
-                    name: "Refrigerante 600ml", 
-                    imageUrl: "https://giassi.vtexassets.com/arquivos/ids/2758294-800-450?v=638627569670200000&width=800&height=450&aspect=true", 
-                    newPrice: 4.50, 
-                    description: "...", 
-                    accompaniments: { limit: 0, options: [] }, 
-                    drinks: { limit: 0, options: [] } 
-                },
-                { 
-                    id: 102, 
-                    name: "Suco Natural de Laranja 500ml", 
-                    imageUrl: "https://phygital-files.mercafacil.com/estrelaquatis/uploads/produto/suco_nat_estrela_manga_500ml_de2d07a5-09bf-4ce1-98d6-5fa2f9e4a5fa.jpg", 
-                    newPrice: 8.00, 
-                    description: "Laranja..", 
-                    accompaniments: { limit: 0, options: [] }, 
-                    drinks: { limit: 0, options: [] } 
-                },
-            ]
+            drinks: {
+                limit: 6,
+                options: [
+                    { name: "Refrigerante 600ml", price: 7.00 },
+                    { name: "Suco Natural 500ml", price: 8.00 }
+                ]
+            }
         },
+    ]
+},
+
         {
             category: "Sobremesas",
             products: [
@@ -1164,14 +1109,18 @@ async function saveConfigToFirebase() {
 
         // Atualizar carrinho (salva no DB e atualiza UI)
         async function updateCart(newCart) {
-            cart = newCart;
-            await saveCartToDB();
-            updateCartCount();
-            
-            if (cartModal.classList.contains('open')) {
-                renderCartItems();
-            }
+    try {
+        cart = newCart;
+        await saveCartToDB();
+        updateCartCount();
+        
+        if (cartModal.classList.contains('open')) {
+            await renderCartItems();
         }
+    } catch (error) {
+        console.error('Erro ao atualizar carrinho:', error);
+    }
+}
 
         // ===================================================================================
         // =========================== FUNÇÕES AUXILIARES ====================================
@@ -1653,67 +1602,92 @@ function updateDrinkQuantity(drink, change, price) {
             cartModalOverlay.classList.remove('open');
         }
 
-        async function renderCartItems() {
-            const container = document.getElementById('cart-items-container');
-            container.innerHTML = '';
-            
-            if (cart.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--dark-gray);">Seu carrinho está vazio</div>';
-                document.getElementById('cart-total-price').textContent = formatPrice(0);
+      async function renderCartItems() {
+    const container = document.getElementById('cart-items-container');
+    container.innerHTML = '';
+    
+    if (cart.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--dark-gray);">Seu carrinho está vazio</div>';
+        document.getElementById('cart-total-price').textContent = formatPrice(0);
+        return;
+    }
+    
+    let total = 0;
+    
+    try {
+        cart.forEach((item) => {
+            if (!item || typeof item !== 'object') {
+                console.warn('Item inválido encontrado no carrinho:', item);
                 return;
             }
             
-            let total = 0;
+            const itemPrice = item.price && !isNaN(item.price) ? parseFloat(item.price) : 0;
+            total += itemPrice;
             
-            try {
-                cart.forEach((item, index) => {
-                    if (!item || typeof item !== 'object') {
-                        console.warn('Item inválido encontrado no carrinho:', item);
-                        return;
-                    }
-                    
-                    const itemPrice = item.price && !isNaN(item.price) ? parseFloat(item.price) : 0;
-                    total += itemPrice;
-                    
-                    const itemEl = document.createElement('div');
-                    itemEl.className = 'cart-item';
-                    
-                    let accompanimentsText = '';
-                    if (item.accompaniments && Array.isArray(item.accompaniments) && item.accompaniments.length > 0) {
-                        accompanimentsText += 'Acompanhamentos: ' + item.accompaniments.map(a => {
-                            return `${a.quantity}x ${a.name}`;
-                        }).join(', ');
-                    }
-                    
-                    if (item.drinks && Array.isArray(item.drinks) && item.drinks.length > 0) {
-                        if (accompanimentsText) accompanimentsText += '<br>';
-                        accompanimentsText += 'Bebidas: ' + item.drinks.map(d => {
-                            return `${d.quantity}x ${d.name}`;
-                        }).join(', ');
-                    }
-                    
-                   itemEl.innerHTML = `
-    <div class="cart-item-header">
-        <div class="cart-item-name">${item.name || 'Produto sem nome'} ${item.quantity > 1 ? `(${item.quantity}x)` : ''}</div>
-        <div class="cart-item-price">${formatPrice(itemPrice)}</div>
-    </div>
-    ${accompanimentsText ? `<div class="cart-item-accompaniments">${accompanimentsText}</div>` : ''}
-    <div class="cart-item-actions">
-        <div class="cart-item-edit" onclick="editCartItem(${item.id})">Editar</div>
-        <div class="cart-item-remove" onclick="removeFromCart(${item.id})">Remover</div>
-    </div>
-`;
-                    container.appendChild(itemEl);
-                });
-            } catch (error) {
-                console.error('Erro ao renderizar itens do carrinho:', error);
-                container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #ef4444;">Erro ao carregar carrinho</div>';
-                total = 0;
+            // Encontrar o produto original para pegar a imagem
+            const originalProduct = findProductById(item.productId);
+            const productImage = originalProduct ? originalProduct.imageUrl : 'https://via.placeholder.com/60x60?text=Sem+Imagem';
+            
+            const itemEl = document.createElement('div');
+            itemEl.className = 'cart-item';
+            
+            let accompanimentsText = '';
+            if (item.accompaniments && Array.isArray(item.accompaniments) && item.accompaniments.length > 0) {
+                accompanimentsText += 'Acompanhamentos: ' + item.accompaniments.map(a => {
+                    return `${a.quantity}x ${a.name}`;
+                }).join(', ');
             }
             
-            document.getElementById('cart-total-price').textContent = formatPrice(total);
-        }
-
+            if (item.drinks && Array.isArray(item.drinks) && item.drinks.length > 0) {
+                if (accompanimentsText) accompanimentsText += '<br>';
+                accompanimentsText += 'Bebidas: ' + item.drinks.map(d => {
+                    return `${d.quantity}x ${d.name}`;
+                }).join(', ');
+            }
+            
+            itemEl.innerHTML = `
+                <div style="border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; background: white; display: flex; align-items: center;">
+                    <!-- IMAGEM DO PRODUTO -->
+                    <div style="width: 60px; height: 60px; margin-right: 15px; flex-shrink: 0;">
+                        <img src="${productImage}" 
+                             alt="${item.name}"
+                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;">
+                    </div>
+                    
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <strong style="font-size: 1.1em; color: #1f2937;">${item.name || 'Produto sem nome'} ${item.quantity > 1 ? `(${item.quantity}x)` : ''}</strong>
+                            <span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; font-weight: bold;">
+                                ${formatPrice(itemPrice)}
+                            </span>
+                        </div>
+                        ${accompanimentsText ? `
+                            <div style="color: #6b7280; font-size: 0.85em; margin-top: 5px;">
+                                ${accompanimentsText}
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <div class="cart-item-edit" onclick="editCartItem(${item.id})" style="padding: 8px 12px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em;">
+                            Editar
+                        </div>
+                        <div class="cart-item-remove" onclick="removeFromCart(${item.id})" style="padding: 8px 12px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em;">
+                            Remover
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(itemEl);
+        });
+    } catch (error) {
+        console.error('Erro ao renderizar itens do carrinho:', error);
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #ef4444;">Erro ao carregar carrinho</div>';
+        total = 0;
+    }
+    
+    document.getElementById('cart-total-price').textContent = formatPrice(total);
+}
+                 
         async function removeFromCart(itemId) {
             const newCart = cart.filter(item => item.id !== itemId);
             await updateCart(newCart);
@@ -1956,8 +1930,8 @@ function updateDrinkQuantity(drink, change, price) {
 
         // Sistema de acesso por atalho de teclado
         let adminKeySequence = [];
-        const ADMIN_SECRET_CODE = ['F2',]; // Ctrl + Alt + A
-
+        const ADMIN_SECRET_CODE = ['F2',]; 
+        
         document.addEventListener('keydown', function(event) {
             adminKeySequence.push(event.key);
             
@@ -2169,64 +2143,81 @@ function updateDrinkQuantity(drink, change, price) {
             loadAdminDashboard();
         }
 
-        function renderProductsManagement() {
-            if (!ADMIN_CONFIG.currentCategory && config.menu.length > 0) {
-                ADMIN_CONFIG.currentCategory = config.menu[0].category;
-            }
+       function renderProductsManagement() {
+    if (!ADMIN_CONFIG.currentCategory && config.menu.length > 0) {
+        ADMIN_CONFIG.currentCategory = config.menu[0].category;
+    }
+    
+    const category = config.menu.find(cat => cat.category === ADMIN_CONFIG.currentCategory);
+    if (!category) return '<p style="text-align: center; color: #6b7280;">Selecione uma categoria para gerenciar os produtos</p>';
+    
+    return `
+        <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h4 style="margin: 0; color: #374151;">Produtos em "${category.category}"</h4>
+                <span style="color: #6b7280;">${category.products.length} produto(s)</span>
+            </div>
             
-            const category = config.menu.find(cat => cat.category === ADMIN_CONFIG.currentCategory);
-            if (!category) return '<p style="text-align: center; color: #6b7280;">Selecione uma categoria para gerenciar os produtos</p>';
+            <button onclick="showAddProductForm()" style="padding: 12px 25px; background: #16a34a; color: white; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                ➕ Adicionar Produto
+            </button>
             
-            return `
-                <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h4 style="margin: 0; color: #374151;">Produtos em "${category.category}"</h4>
-                        <span style="color: #6b7280;">${category.products.length} produto(s)</span>
-                    </div>
-                    
-                    <button onclick="showAddProductForm()" style="padding: 12px 25px; background: #16a34a; color: white; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; display: flex; align-items: center; gap: 8px;">
-                        ➕ Adicionar Produto
-                    </button>
-                    
-                    <div style="display: grid; gap: 15px;">
-                        ${category.products.length > 0 ? 
-                            category.products.map(product => `
-                                <div style="border: 1px solid #e5e7eb; padding: 20px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; background: #fafafa;">
-                                    <div style="flex: 1;">
-                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                                            <strong style="font-size: 1.1em; color: #1f2937;">${product.name}</strong>
-                                            <span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; font-weight: bold;">
-                                                ${formatPrice(product.newPrice)}
-                                            </span>
-                                            ${product.oldPrice ? `
-                                                <span style="text-decoration: line-through; color: #6b7280; font-size: 0.9em;">
-                                                    ${formatPrice(product.oldPrice)}
-                                                </span>
-                                            ` : ''}
-                                        </div>
-                                        <div style="color: #6b7280; font-size: 0.9em;">
-                                            ID: ${product.id} 
-                                            ${product.stock ? `| Estoque: ${product.stock}` : ''}
-                                            ${product.delivery ? `| ${product.delivery}` : ''}
-                                        </div>
-                                    </div>
-                                    <div style="display: flex; gap: 10px;">
-                                        <button onclick="editProductAdmin(${product.id})" style="padding: 8px 15px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                                            ✏️ Editar
-                                        </button>
-                                        <button onclick="deleteProductAdmin(${product.id})" style="padding: 8px 15px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                                            🗑️ Excluir
-                                        </button>
-                                    </div>
+            <div style="display: grid; gap: 15px;">
+                ${category.products.length > 0 ? 
+                    category.products.map(product => `
+                        <div style="border: 1px solid #e5e7eb; padding: 15px; border-radius: 10px; display: flex; background: #fafafa;">
+                            <!-- IMAGEM DO PRODUTO -->
+                            <div style="width: 80px; height: 80px; margin-right: 15px; flex-shrink: 0;">
+                                <img src="${product.imageUrl || 'https://via.placeholder.com/80x80?text=Sem+Imagem'}" 
+                                     alt="${product.name}"
+                                     style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb;">
+                            </div>
+                            
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                    <strong style="font-size: 1.1em; color: #1f2937;">${product.name}</strong>
+                                    <span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; font-weight: bold;">
+                                        ${formatPrice(product.newPrice)}
+                                    </span>
+                                    ${product.oldPrice ? `
+                                        <span style="text-decoration: line-through; color: #6b7280; font-size: 0.9em;">
+                                            ${formatPrice(product.oldPrice)}
+                                        </span>
+                                    ` : ''}
+                                    ${product.stock === 0 ? `
+                                        <span style="background: #fef2f2; color: #dc2626; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; font-weight: bold;">
+                                            ESGOTADO
+                                        </span>
+                                    ` : ''}
                                 </div>
-                            `).join('') 
-                        : 
-                            '<div style="text-align: center; padding: 40px; color: #6b7280; background: #f9fafb; border-radius: 10px; border: 2px dashed #d1d5db;">Nenhum produto nesta categoria</div>'
-                        }
-                    </div>
-                </div>
-            `;
-        }
+                                <div style="color: #6b7280; font-size: 0.9em;">
+                                    ID: ${product.id} 
+                                    ${product.stock !== undefined ? `| Estoque: ${product.stock}` : ''}
+                                    ${product.delivery ? `| ${product.delivery}` : ''}
+                                </div>
+                                ${product.description ? `
+                                    <div style="color: #6b7280; font-size: 0.85em; margin-top: 5px;">
+                                        ${product.description}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                <button onclick="editProductAdmin(${product.id})" style="padding: 8px 15px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                                    ✏️ Editar
+                                </button>
+                                <button onclick="deleteProductAdmin(${product.id})" style="padding: 8px 15px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                                    🗑️ Excluir
+                                </button>
+                            </div>
+                        </div>
+                    `).join('') 
+                : 
+                    '<div style="text-align: center; padding: 40px; color: #6b7280; background: #f9fafb; border-radius: 10px; border: 2px dashed #d1d5db;">Nenhum produto nesta categoria</div>'
+                }
+            </div>
+        </div>
+    `;
+}
 
         function showAddProductForm() {
             const category = config.menu.find(cat => cat.category === ADMIN_CONFIG.currentCategory);
@@ -2711,72 +2702,84 @@ function updateDrinkQuantity(drink, change, price) {
             displaySearchResults(results, searchCount, searchTerm);
         }
 
-        function displaySearchResults(results, totalCount, searchTerm) {
-            const resultsContainer = document.getElementById('search-results');
-            const resultsContent = document.getElementById('search-results-content');
-            const statsElement = document.getElementById('search-stats');
-            
-            if (results.length === 0) {
-                resultsContent.innerHTML = `
-                    <div style="text-align: center; padding: 30px; color: #666; background: #f5f5f5; border-radius: 8px;">
-                        <div style="font-size: 3em; margin-bottom: 10px;">🔍</div>
-                        <h4 style="color: #666; margin-bottom: 10px;">Nenhum produto encontrado</h4>
-                        <p>Tente usar termos diferentes ou verificar os filtros aplicados.</p>
-                    </div>
-                `;
-                statsElement.innerHTML = `❌ Nenhum resultado encontrado para "${searchTerm}"`;
-            } else {
-                resultsContent.innerHTML = `
-                    <div style="display: grid; gap: 12px;">
-                        ${results.map((result, index) => `
-                            <div style="border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; background: white; display: flex; justify-content: space-between; align-items: center;">
-                                <div style="flex: 1;">
-                                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                                        <strong style="font-size: 1.1em; color: #1f2937;">${result.product.name}</strong>
-                                        <span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; font-weight: bold;">
-                                            ${formatPrice(result.product.newPrice)}
-                                        </span>
-                                        ${result.product.oldPrice ? `
-                                            <span style="text-decoration: line-through; color: #6b7280; font-size: 0.9em;">
-                                                ${formatPrice(result.product.oldPrice)}
-                                            </span>
-                                        ` : ''}
-                                    </div>
-                                    <div style="color: #6b7280; font-size: 0.9em;">
-                                        <strong>Categoria:</strong> ${result.category} 
-                                        | <strong>ID:</strong> ${result.product.id}
-                                        ${result.product.stock ? `| <strong>Estoque:</strong> ${result.product.stock}` : '| <strong>Estoque:</strong> Sem limite'}
-                                        ${result.product.stock === 0 ? '<span style="color: #ef4444; font-weight: bold;"> (ESGOTADO)</span>' : ''}
-                                    </div>
-                                    ${result.product.description ? `
-                                        <div style="color: #6b7280; font-size: 0.85em; margin-top: 5px; font-style: italic;">
-                                            "${result.product.description}"
-                                        </div>
-                                    ` : ''}
-                                </div>
-                                <div style="display: flex; gap: 8px;">
-                                    <button onclick="editProductFromSearch(${result.product.id})" 
-                                            style="padding: 8px 12px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em;">
-                                        ✏️ Editar
-                                    </button>
-                                    <button onclick="viewProductInCategory('${result.category}', ${result.product.id})" 
-                                            style="padding: 8px 12px; background: #8b5cf6; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em;">
-                                        👁️ Ver
-                                    </button>
-                                </div>
+      function displaySearchResults(results, totalCount, searchTerm) {
+    const resultsContainer = document.getElementById('search-results');
+    const resultsContent = document.getElementById('search-results-content');
+    const statsElement = document.getElementById('search-stats');
+    
+    if (results.length === 0) {
+        resultsContent.innerHTML = `
+            <div style="text-align: center; padding: 30px; color: #666; background: #f5f5f5; border-radius: 8px;">
+                <div style="font-size: 3em; margin-bottom: 10px;">🔍</div>
+                <h4 style="color: #666; margin-bottom: 10px;">Nenhum produto encontrado</h4>
+                <p>Tente usar termos diferentes ou verificar os filtros aplicados.</p>
+            </div>
+        `;
+        statsElement.innerHTML = `❌ Nenhum resultado encontrado para "${searchTerm}"`;
+    } else {
+        resultsContent.innerHTML = `
+            <div style="display: grid; gap: 12px;">
+                ${results.map((result, index) => `
+                    <div style="border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; background: white; display: flex; align-items: center;">
+                        <!-- IMAGEM DO PRODUTO -->
+                        <div style="width: 80px; height: 80px; margin-right: 15px; flex-shrink: 0;">
+                            <img src="${result.product.imageUrl || 'https://via.placeholder.com/80x80?text=Sem+Imagem'}" 
+                                 alt="${result.product.name}"
+                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;">
+                        </div>
+                        
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <strong style="font-size: 1.1em; color: #1f2937;">${result.product.name}</strong>
+                                <span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; font-weight: bold;">
+                                    ${formatPrice(result.product.newPrice)}
+                                </span>
+                                ${result.product.oldPrice ? `
+                                    <span style="text-decoration: line-through; color: #6b7280; font-size: 0.9em;">
+                                        ${formatPrice(result.product.oldPrice)}
+                                    </span>
+                                ` : ''}
+                                ${result.product.stock === 0 ? `
+                                    <span style="background: #fef2f2; color: #dc2626; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; font-weight: bold;">
+                                        ESGOTADO
+                                    </span>
+                                ` : ''}
                             </div>
-                        `).join('')}
+                            <div style="color: #6b7280; font-size: 0.9em;">
+                                <strong>Categoria:</strong> ${result.category} 
+                                | <strong>ID:</strong> ${result.product.id}
+                                ${result.product.stock !== undefined ? `| <strong>Estoque:</strong> ${result.product.stock}` : '| <strong>Estoque:</strong> Sem limite'}
+                                ${result.product.delivery ? `| ${result.product.delivery}` : ''}
+                            </div>
+                            ${result.product.description ? `
+                                <div style="color: #6b7280; font-size: 0.85em; margin-top: 5px; font-style: italic;">
+                                    "${result.product.description}"
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="editProductFromSearch(${result.product.id})" 
+                                    style="padding: 8px 12px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em;">
+                                ✏️ Editar
+                            </button>
+                            <button onclick="viewProductInCategory('${result.category}', ${result.product.id})" 
+                                    style="padding: 8px 12px; background: #8b5cf6; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em;">
+                                👁️ Ver
+                            </button>
+                        </div>
                     </div>
-                `;
-                
-                statsElement.innerHTML = `✅ Encontrados ${results.length} de ${totalCount} produtos para "${searchTerm}"`;
-            }
-            
-            resultsContainer.style.display = 'block';
-            
-            // Scroll suave para os resultados
-            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
+                `).join('')}
+            </div>
+        `;
+        
+        statsElement.innerHTML = `✅ Encontrados ${results.length} de ${totalCount} produtos para "${searchTerm}"`;
+    }
+    
+    resultsContainer.style.display = 'block';
+    
+    // Scroll suave para os resultados
+    resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
 
         function editProductFromSearch(productId) {
             // Fechar resultados da pesquisa
@@ -2837,7 +2840,7 @@ function updateDrinkQuantity(drink, change, price) {
             if (searchInput) {
                 searchInput.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
-                        performAdminSearch();
+                        z;
                     }
                 });
             }
