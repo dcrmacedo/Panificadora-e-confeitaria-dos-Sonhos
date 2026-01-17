@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -373,6 +374,276 @@
         .cart-total { display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem; }
         .finalize-btn { width: 100%; background-color: var(--green); color: var(--white); border: none; padding: 1rem; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
 
+        /* === SISTEMA DE PESQUISA === */
+.search-icon {
+    position: relative;
+    cursor: pointer;
+    background-color: var(--white);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.search-icon:hover {
+    transform: scale(1.05);
+    background-color: var(--light-gray);
+}
+
+.search-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.search-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    background-color: var(--white);
+    z-index: 999;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.search-modal.open {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.search-modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.search-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--medium-gray);
+    background: var(--white);
+}
+
+.search-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: var(--secondary-color);
+}
+
+.search-input-icon {
+    position: absolute;
+    left: 1rem;
+    color: var(--dark-gray);
+}
+
+.search-filters {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+    cursor: pointer;
+}
+
+.filter-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.filter-group select {
+    padding: 0.5rem;
+    border: 1px solid var(--medium-gray);
+    border-radius: 5px;
+    background: var(--white);
+}
+
+.search-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.search-results-count {
+    color: var(--dark-gray);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.search-results-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid var(--medium-gray);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--white);
+}
+
+.search-result-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: var(--primary-color);
+}
+
+.search-result-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.search-result-info {
+    flex: 1;
+}
+
+.search-result-name {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    color: var(--text-color);
+}
+
+.search-result-category {
+    font-size: 0.8rem;
+    color: var(--dark-gray);
+    margin-bottom: 0.25rem;
+}
+
+.search-result-price {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.search-result-stock {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+.search-result-stock.in-stock {
+    color: var(--green);
+}
+
+.search-result-stock.out-of-stock {
+    color: #ef4444;
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: var(--dark-gray);
+}
+
+.no-results-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.search-footer {
+    padding: 1rem;
+    border-top: 1px solid var(--medium-gray);
+    text-align: center;
+    background: var(--light-gray);
+}
+
+.close-search-btn {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.close-search-btn:hover {
+    background: var(--secondary-color);
+}
+
+/* Destaque para texto pesquisado */
+.highlight {
+    background-color: #fff3cd;
+    padding: 0.1rem 0.2rem;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .search-modal {
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .search-filters {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .search-result-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .search-result-image {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+}
+
         /* =========================================== */
         
         /* =========================================== */
@@ -608,20 +879,30 @@ document.addEventListener('DOMContentLoaded', function() {
 </head>
 <body>
 
-
     <div id="main-page">
         <header class="hero-section">
             <div class="top-bar">
                 <div class="status-badge" id="status-badge"><span class="dot"></span>ABERTO</div>
-                <div class="cart-icon" onclick="openCart()"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color);"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span class="cart-count" id="cart-count">0</span></div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <!-- Ícone de Pesquisa -->
+                    <div class="search-icon" onclick="openSearch()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color);">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                    <!-- Ícone do Carrinho -->
+                    <div class="cart-icon" onclick="openCart()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color);">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </div>
+                </div>
             </div>
         </header>
-        <div class="search-icon" onclick="openSearch()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-    </div>
         
         <div class="shop-info-container">
             <div class="shop-logo"><img id="shop-logo-main" src="" alt="Logo da Loja"></div>
@@ -734,6 +1015,44 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
         <div class="cart-footer"><div class="cart-total"><span>Total</span><span id="cart-total-price">R$ 0,00</span></div><button class="finalize-btn" onclick="finalizeOrder()">Finalizar Pedido no Whatsapp</button></div>
+    </div>
+
+    <!-- Modal de Pesquisa -->
+    <div id="search-modal-overlay" class="search-modal-overlay" onclick="closeSearch()"></div>
+    <div id="search-modal" class="search-modal">
+        <div class="search-header">
+            <div class="search-input-container">
+                <svg class="search-input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="search-input" class="search-input" placeholder="Pesquisar produtos..." autocomplete="off">
+            </div>
+            <div class="search-filters">
+                <div class="filter-group">
+                    <input type="checkbox" id="filter-in-stock" checked>
+                    <label for="filter-in-stock">Em estoque</label>
+                </div>
+                <div class="filter-group">
+                    <input type="checkbox" id="filter-out-of-stock">
+                    <label for="filter-out-of-stock">Sem estoque</label>
+                </div>
+                <div class="filter-group">
+                    <select id="filter-category">
+                        <option value="">Todas categorias</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="search-content">
+            <div id="search-results-count" class="search-results-count"></div>
+            <div id="search-results" class="search-results-grid">
+                <!-- Resultados aparecerão aqui -->
+            </div>
+        </div>
+        <div class="search-footer">
+            <button class="close-search-btn" onclick="closeSearch()">Fechar</button>
+        </div>
     </div>
 
     <!-- =========================================== -->
@@ -1153,6 +1472,219 @@ async function saveConfigToFirebase() {
                 console.error('Erro ao atualizar estoque:', error);
                 return false;
             }
+        }
+
+        // ===================================================================================
+        // =========================== SISTEMA DE PESQUISA ===================================
+        // ===================================================================================
+
+        let searchTimeout = null;
+
+        function openSearch() {
+            const searchModal = document.getElementById('search-modal');
+            const searchOverlay = document.getElementById('search-modal-overlay');
+            const searchInput = document.getElementById('search-input');
+            
+            // Debug dos elementos
+            debugSearchElements();
+            
+            // Preencher categorias no filtro
+            populateCategoryFilter();
+            
+            // Abrir modal
+            searchModal.classList.add('open');
+            searchOverlay.classList.add('open');
+            
+            // Focar no input
+            setTimeout(() => {
+                searchInput.focus();
+            }, 300);
+            
+            // Pesquisar produtos disponíveis inicialmente
+            performSearch();
+        }
+
+        function closeSearch() {
+            const searchModal = document.getElementById('search-modal');
+            const searchOverlay = document.getElementById('search-modal-overlay');
+            
+            searchModal.classList.remove('open');
+            searchOverlay.classList.remove('open');
+            
+            // Limpar timeout
+            if (searchTimeout) {
+                clearTimeout(searchTimeout);
+            }
+        }
+
+        function populateCategoryFilter() {
+            const categorySelect = document.getElementById('filter-category');
+            
+            // Limpar opções existentes (exceto a primeira)
+            while (categorySelect.children.length > 1) {
+                categorySelect.removeChild(categorySelect.lastChild);
+            }
+            
+            // Adicionar categorias
+            config.menu.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.category;
+                option.textContent = category.category;
+                categorySelect.appendChild(option);
+            });
+        }
+
+        function setupSearchEventListeners() {
+            const searchInput = document.getElementById('search-input');
+            const filterInStock = document.getElementById('filter-in-stock');
+            const filterOutOfStock = document.getElementById('filter-out-of-stock');
+            const filterCategory = document.getElementById('filter-category');
+            
+            // Evento de input com debounce
+            searchInput.addEventListener('input', function() {
+                if (searchTimeout) {
+                    clearTimeout(searchTimeout);
+                }
+                
+                searchTimeout = setTimeout(() => {
+                    performSearch();
+                }, 300);
+            });
+            
+            // Eventos dos filtros
+            filterInStock.addEventListener('change', performSearch);
+            filterOutOfStock.addEventListener('change', performSearch);
+            filterCategory.addEventListener('change', performSearch);
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('search-input').value.trim().toLowerCase();
+            const filterInStock = document.getElementById('filter-in-stock').checked;
+            const filterOutOfStock = document.getElementById('filter-out-of-stock').checked;
+            const filterCategory = document.getElementById('filter-category').value;
+            
+            const results = [];
+            let totalMatches = 0;
+            
+            // Pesquisar em todas as categorias
+            config.menu.forEach(category => {
+                // Pular categoria se filtro estiver ativo
+                if (filterCategory && category.category !== filterCategory) {
+                    return;
+                }
+                
+                category.products.forEach(product => {
+                    // Verificar se o produto corresponde ao termo de pesquisa
+                    const matchesSearch = !searchTerm || 
+                        product.name.toLowerCase().includes(searchTerm) ||
+                        (product.description && product.description.toLowerCase().includes(searchTerm));
+                    
+                    // Verificar filtro de estoque
+                    const hasStock = isProductAvailable(product);
+                    const matchesStock = (filterInStock && hasStock) || 
+                                       (filterOutOfStock && !hasStock) ||
+                                       (!filterInStock && !filterOutOfStock);
+                    
+                    if (matchesSearch && matchesStock) {
+                        results.push({
+                            category: category.category,
+                            product: product
+                        });
+                        totalMatches++;
+                    }
+                });
+            });
+            
+            displaySearchResults(results, totalMatches, searchTerm);
+        }
+
+        function displaySearchResults(results, totalMatches, searchTerm) {
+            try {
+                // ✅ CORREÇÃO: Usar o ID correto 'search-results'
+                const resultsContainer = document.getElementById('search-results');
+                const resultsCount = document.getElementById('search-results-count');
+                
+                // ✅ VERIFICAÇÃO DE SEGURANÇA
+                if (!resultsContainer) {
+                    console.error('❌ Elemento search-results não encontrado no DOM');
+                    return;
+                }
+                
+                if (!resultsCount) {
+                    console.error('❌ Elemento search-results-count não encontrado no DOM');
+                    return;
+                }
+                
+                // Atualizar contador
+                if (totalMatches === 0) {
+                    resultsCount.textContent = 'Nenhum produto encontrado';
+                    resultsCount.style.color = '#ef4444';
+                } else {
+                    resultsCount.textContent = `${totalMatches} produto(s) encontrado(s)`;
+                    resultsCount.style.color = '#16a34a';
+                }
+                
+                // Limpar resultados anteriores
+                resultsContainer.innerHTML = '';
+                
+                if (results.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="no-results">
+                            <div class="no-results-icon">🔍</div>
+                            <h3>Nenhum produto encontrado</h3>
+                            <p>Tente usar outros termos de pesquisa ou ajustar os filtros</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Exibir resultados
+                results.forEach(result => {
+                    const product = result.product;
+                    const isAvailable = isProductAvailable(product);
+                    
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+                    resultItem.onclick = () => {
+                        closeSearch();
+                        showProductPage(product.id);
+                    };
+                    
+                    // Destacar termo de pesquisa no nome
+                    let highlightedName = product.name;
+                    if (searchTerm) {
+                        const regex = new RegExp(`(${searchTerm})`, 'gi');
+                        highlightedName = product.name.replace(regex, '<span class="highlight">$1</span>');
+                    }
+                    
+                    resultItem.innerHTML = `
+                        <img src="${product.imageUrl}" alt="${product.name}" class="search-result-image">
+                        <div class="search-result-info">
+                            <div class="search-result-name">${highlightedName}</div>
+                            <div class="search-result-category">${result.category}</div>
+                            <div class="search-result-price">${formatPrice(product.newPrice)}</div>
+                            <div class="search-result-stock ${isAvailable ? 'in-stock' : 'out-of-stock'}">
+                                ${isAvailable ? 
+                                    (product.stock ? ` ${product.stock} disponíveis` : ' Disponível') : 
+                                    ' Indisponível'}
+                            </div>
+                        </div>
+                    `;
+                    
+                    resultsContainer.appendChild(resultItem);
+                });
+            } catch (error) {
+                console.error('❌ Erro em displaySearchResults:', error);
+            }
+        }
+
+        // Função de debug para verificar elementos
+        function debugSearchElements() {
+            console.log('🔍 Debug - Elementos de pesquisa:');
+            console.log('- search-results:', document.getElementById('search-results'));
+            console.log('- search-results-count:', document.getElementById('search-results-count'));
+            console.log('- search-modal:', document.getElementById('search-modal'));
+            console.log('- search-input:', document.getElementById('search-input'));
         }
 
         // ===================================================================================
@@ -1885,12 +2417,30 @@ function updateDrinkQuantity(drink, change, price) {
         // 4. Finalmente renderiza o menu
         await renderMenuPage();
         
+        // 5. Inicializar sistema de pesquisa
+        setupSearchEventListeners();
+        
+        // 6. Verificar elementos de pesquisa
+        console.log('✅ Verificando elementos de pesquisa...');
+        const searchElements = [
+            'search-results',
+            'search-results-count', 
+            'search-input',
+            'search-modal'
+        ];
+        
+        searchElements.forEach(id => {
+            const element = document.getElementById(id);
+            console.log(`- ${id}:`, element ? '✅ Encontrado' : '❌ Não encontrado');
+        });
+        
         console.log('✅ Aplicação inicializada com sucesso');
     } catch (error) {
         console.error('❌ Erro ao inicializar aplicação:', error);
         // Fallback: usa configuração padrão mesmo com erro
         config = { ...defaultConfig };
         await renderMenuPage();
+        setupSearchEventListeners();
     }
 });
         function updateButtonsState() {
@@ -2053,40 +2603,6 @@ function updateDrinkQuantity(drink, change, price) {
                     </div>
                 </div>
 
-                <!-- ABA DE PESQUISA -->
-                <div class="admin-card" style="background: #fff3e0; padding: 20px; border-radius: 10px; border: 1px solid #ffb74d; margin-bottom: 30px;">
-                    <h3 style="color: #e65100; margin-top: 0;">🔍 Pesquisar por produto</h3>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-bottom: 15px;">
-                        <input type="text" id="admin-search-input" placeholder="Digite o nome do produto, categoria, ID..." 
-                               style="width: 100%; padding: 12px; border: 2px solid #ff9800; border-radius: 8px; font-size: 16px;">
-                        <button onclick="performAdminSearch()" 
-                                style="padding: 12px 25px; background: #ff9800; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; white-space: nowrap;">
-                            🔍 Pesquisar
-                        </button>
-                    </div>
-                    
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
-                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
-                            <input type="checkbox" id="search-in-stock" checked> Em estoque
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
-                            <input type="checkbox" id="search-out-of-stock"> Sem estoque
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
-                            <input type="checkbox" id="search-by-id" style="margin-left: 15px;"> Buscar por ID
-                        </label>
-                    </div>
-                    
-                    <div id="search-results" style="display: none;">
-                        <div style="border-top: 2px solid #ffb74d; padding-top: 15px;">
-                            <h4 style="color: #e65100; margin-bottom: 15px;">📋 Resultados da Pesquisa</h4>
-                            <div id="search-results-content"></div>
-                        </div>
-                    </div>
-                    
-                    <div id="search-stats" style="margin-top: 10px; font-size: 0.9em; color: #e65100;"></div>
-                </div>
                 
                 <div class="admin-card" style="background: white; padding: 20px; border-radius: 10px; border: 1px solid #e5e7eb;">
                     <h3 style="color: #1f2937; margin-top: 0;">📦 Gerenciar Produtos</h3>
@@ -2096,9 +2612,7 @@ function updateDrinkQuantity(drink, change, price) {
                     </div>
                 </div>
             `;
-            
-            // Adicionar event listener para Enter na pesquisa
-            setTimeout(addSearchEventListener, 100);
+                    
         }
 
         function renderCategoryTabs() {
@@ -2699,10 +3213,10 @@ function updateDrinkQuantity(drink, change, price) {
                 });
             });
             
-            displaySearchResults(results, searchCount, searchTerm);
+            displayAdminSearchResults(results, searchCount, searchTerm);
         }
 
-      function displaySearchResults(results, totalCount, searchTerm) {
+      function displayAdminSearchResults(results, totalCount, searchTerm) {
     const resultsContainer = document.getElementById('search-results');
     const resultsContent = document.getElementById('search-results-content');
     const statsElement = document.getElementById('search-stats');
@@ -2840,7 +3354,7 @@ function updateDrinkQuantity(drink, change, price) {
             if (searchInput) {
                 searchInput.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
-                        z;
+                        performAdminSearch();
                     }
                 });
             }
@@ -3269,4 +3783,3 @@ function updateDrinkQuantity(drink, change, price) {
     </script>
 </body>
 </html>
-
